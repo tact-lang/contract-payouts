@@ -1,0 +1,171 @@
+#pragma version =0.4.3;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "sample_PayoutBeacon.headers.fc";
+#include "sample_PayoutBeacon.stdlib.fc";
+#include "sample_PayoutBeacon.constants.fc";
+#include "sample_PayoutBeacon.storage.fc";
+
+;;
+;; Contract PayoutBeacon functions
+;;
+
+(slice, slice, int) $PayoutBeacon$_contract_init(slice $owner, slice $master) impure inline_ref {
+    var (($self'owner, $self'master, $self'completed)) = (null(), null(), null());
+    $self'owner = $owner;
+    $self'master = $master;
+    $self'completed = false;
+    return ($self'owner, $self'master, $self'completed);
+}
+
+((slice, slice, int), slice) $PayoutBeacon$_fun_master((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'master, $self'completed)) = $self;
+    return (($self'owner, $self'master, $self'completed), $self'master);
+}
+
+((slice, slice, int), int) $PayoutBeacon$_fun_completed((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'master, $self'completed)) = $self;
+    return (($self'owner, $self'master, $self'completed), $self'completed);
+}
+
+((slice, slice, int), slice) $PayoutBeacon$_fun_owner((slice, slice, int) $self) impure inline_ref {
+    var (($self'owner, $self'master, $self'completed)) = $self;
+    return (($self'owner, $self'master, $self'completed), $self'owner);
+}
+
+;;
+;; Receivers of a Contract PayoutBeacon
+;;
+
+(((slice, slice, int)), ()) $PayoutBeacon$_internal_binary_TryPayout((slice, slice, int) $self, (slice, int) $msg) impure inline {
+    var ($self'owner, $self'master, $self'completed) = $self;
+    var ($msg'address, $msg'value) = $msg;
+    var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
+    throw_unless(4429, ( __tact_slice_eq_bits($self'master, $ctx'sender) ));
+    if ((~ $self'completed)) {
+        $self'completed = true;
+        ($self'owner, $self'master, $self'completed)~$PayoutBeacon$_fun_forward($ctx'sender, $PayoutOk$_store_cell($PayoutOk$_constructor_value_address($msg'value, $self'owner)), true, null());
+    } else {
+        ($self'owner, $self'master, $self'completed)~$PayoutBeacon$_fun_forward($ctx'sender, $PayoutFailed$_store_cell($PayoutFailed$_constructor_value_address($msg'value, $self'owner)), false, null());
+    }
+    return (($self'owner, $self'master, $self'completed), ());
+}
+
+((slice, slice, int), ()) $PayoutBeacon$_receive_bounce((slice, slice, int) $self, slice $msg) impure inline {
+    var ($self'owner, $self'master, $self'completed) = $self;
+    slice $address = $msg~__tact_load_address();
+    throw_unless(4429, ( __tact_slice_eq_bits($self'master, $address) ));
+    $self'completed = false;
+    ($self'owner, $self'master, $self'completed)~$PayoutBeacon$_fun_forward($address, __gen_cell_comment_78b0aaadc117be03d1b8403b36288b7cdcb49676035c923368c2baf21da6ea04(), false, null());
+    return (($self'owner, $self'master, $self'completed), ());
+}
+
+(((slice, slice, int)), ()) $PayoutBeacon$_internal_binary_Deploy((slice, slice, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'master, $self'completed) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'owner, $self'master, $self'completed)~$PayoutBeacon$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'master, $self'completed), ());
+}
+
+;;
+;; Get methods of a Contract PayoutBeacon
+;;
+
+_ %master() method_id(120253) {
+    var self = $PayoutBeacon$_contract_load();
+    var res = self~$PayoutBeacon$_fun_master();
+    return res;
+}
+
+_ %completed() method_id(79554) {
+    var self = $PayoutBeacon$_contract_load();
+    var res = self~$PayoutBeacon$_fun_completed();
+    return res;
+}
+
+_ %owner() method_id(83229) {
+    var self = $PayoutBeacon$_contract_load();
+    var res = self~$PayoutBeacon$_fun_owner();
+    return res;
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128,
+        "org.ton.ownable"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://QmS2vbqtQpxPn4ebehfBdzUxGsvKw5vu1V67b6gj7Z52Hm";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract PayoutBeacon
+;;
+
+((slice, slice, int), int) $PayoutBeacon$_contract_router_internal((slice, slice, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        ;; Skip 0xFFFFFFFF
+        in_msg~skip_bits(32);
+        
+        self~$PayoutBeacon$_receive_bounce(in_msg);
+        
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive TryPayout message
+    if (op == 2291174705) {
+        var msg = in_msg~$TryPayout$_load();
+        self~$PayoutBeacon$_internal_binary_TryPayout(msg);
+        return (self, true);
+    }
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$PayoutBeacon$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $PayoutBeacon$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$PayoutBeacon$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $PayoutBeacon$_contract_store(self);
+}

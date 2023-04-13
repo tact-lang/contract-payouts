@@ -1,0 +1,6 @@
+#pragma version =0.4.3;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;; Comment "Payout failed"
+cell __gen_cell_comment_78b0aaadc117be03d1b8403b36288b7cdcb49676035c923368c2baf21da6ea04() asm "B{b5ee9c72410101010013000022000000005061796f7574206661696c6564ad44bad5} B>boc PUSHREF";

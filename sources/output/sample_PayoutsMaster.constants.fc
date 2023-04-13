@@ -1,0 +1,21 @@
+#pragma version =0.4.3;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;; Comment "OK"
+cell __gen_cell_comment_dbe1c797d6d2d914c463173b1da531103d2efe747471212d1fad170fcf0c75d2() asm "B{b5ee9c7241010101000800000c000000004f4b86af522d} B>boc PUSHREF";
+
+;; Comment "Already withdrawn"
+cell __gen_cell_comment_ca2e2e41ec6856c7bbd899bcfd500eb117c5f32a29330cf418e4ca98056f4a72() asm "B{b5ee9c7241010101001700002a00000000416c72656164792077697468647261776ee8b1aaae} B>boc PUSHREF";
+
+;; Comment "Deposit received"
+cell __gen_cell_comment_13c8d1a083e5ccb8cf7681be11c1ed303c4a19cb0110663a87e8c3fc525c2879() asm "B{b5ee9c72410101010016000028000000004465706f73697420726563656976656497afbae7} B>boc PUSHREF";
+
+;; Comment "Withdraw completed"
+cell __gen_cell_comment_f7b1ab6077945b37370a1550574675180cf87df4cb047c869746812a83667d4c() asm "B{b5ee9c7241010101001800002c00000000576974686472617720636f6d706c65746564190fd038} B>boc PUSHREF";
+
+;; Comment "Resumed"
+cell __gen_cell_comment_514f593ead485926515219a03034c6b162f1c29390f83f2f1bd70b8b77731ec3() asm "B{b5ee9c7241010101000d00001600000000526573756d656412d9e98a} B>boc PUSHREF";
+
+;; Comment "Stopped"
+cell __gen_cell_comment_8f4b6a166554b4f282855d0333c627d5b58d281ea4ba11e4def91a1053193b2d() asm "B{b5ee9c7241010101000d0000160000000053746f707065646f94ddb2} B>boc PUSHREF";

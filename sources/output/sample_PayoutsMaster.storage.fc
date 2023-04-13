@@ -1,0 +1,229 @@
+#pragma version =0.4.3;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+;;
+;; Type: StateInit
+;; TLB: _ code:^cell data:^cell = StateInit
+;;
+
+((cell, cell)) $StateInit$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (cell vvv'code, cell vvv'data) = __tact_tuple_destroy_2(v);
+    return (vvv'code, vvv'data);
+}
+
+tuple $StateInit$_as_optional((cell, cell) v) inline {
+    var (v'code, v'data) = v;
+    return __tact_tuple_create_2(v'code, v'data);
+}
+
+;;
+;; Type: SendParameters
+;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
+;;
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline {
+    return (bounce, to, value, mode, body, code, data);
+}
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_value_mode_to_body(int value, int mode, slice to, cell body) inline {
+    return (true, to, value, mode, body, null(), null());
+}
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_value_mode_to_bounce_body(int value, int mode, slice to, int bounce, cell body) inline {
+    return (bounce, to, value, mode, body, null(), null());
+}
+
+;;
+;; Type: Deploy
+;; Header: 0x946a98b6
+;; TLB: deploy#946a98b6 queryId:uint64 = Deploy
+;;
+
+(slice, ((int))) $Deploy$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2490013878);
+    var v'queryId = sc_0~load_uint(64);
+    return (sc_0, (v'queryId));
+}
+
+;;
+;; Type: DeployOk
+;; Header: 0xaff90f57
+;; TLB: deploy_ok#aff90f57 queryId:uint64 = DeployOk
+;;
+
+builder $DeployOk$_store(builder build_0, (int) v) inline {
+    var (v'queryId) = v;
+    build_0 = store_uint(build_0, 2952335191, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    return build_0;
+}
+
+cell $DeployOk$_store_cell((int) v) inline {
+    return $DeployOk$_store(begin_cell(), v).end_cell();
+}
+
+((int)) $DeployOk$_constructor_queryId(int queryId) inline {
+    return (queryId);
+}
+
+;;
+;; Type: TryPayout
+;; Header: 0x88908d31
+;; TLB: try_payout#88908d31 address:address value:int257 = TryPayout
+;;
+
+builder $TryPayout$_store(builder build_0, (slice, int) v) inline {
+    var (v'address, v'value) = v;
+    build_0 = store_uint(build_0, 2291174705, 32);
+    build_0 = __tact_store_address(build_0, v'address);
+    build_0 = build_0.store_int(v'value, 257);
+    return build_0;
+}
+
+cell $TryPayout$_store_cell((slice, int) v) inline {
+    return $TryPayout$_store(begin_cell(), v).end_cell();
+}
+
+((slice, int)) $TryPayout$_constructor_address_value(slice address, int value) inline {
+    return (address, value);
+}
+
+;;
+;; Type: PayoutOk
+;; Header: 0xa4fdf58e
+;; TLB: payout_ok#a4fdf58e address:address value:int257 = PayoutOk
+;;
+
+(slice, ((slice, int))) $PayoutOk$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2768106894);
+    var v'address = sc_0~__tact_load_address();
+    var v'value = sc_0~load_int(257);
+    return (sc_0, (v'address, v'value));
+}
+
+;;
+;; Type: PayoutFailed
+;; Header: 0xa7a1a987
+;; TLB: payout_failed#a7a1a987 address:address value:int257 = PayoutFailed
+;;
+
+(slice, ((slice, int))) $PayoutFailed$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2812389767);
+    var v'address = sc_0~__tact_load_address();
+    var v'value = sc_0~load_int(257);
+    return (sc_0, (v'address, v'value));
+}
+
+;;
+;; Type: BurnParameters
+;; TLB: _ startAt:int257 endAt:int257 = BurnParameters
+;;
+
+builder $BurnParameters$_store(builder build_0, (int, int) v) inline {
+    var (v'startAt, v'endAt) = v;
+    build_0 = build_0.store_int(v'startAt, 257);
+    build_0 = build_0.store_int(v'endAt, 257);
+    return build_0;
+}
+
+(slice, ((int, int))) $BurnParameters$_load(slice sc_0) inline {
+    var v'startAt = sc_0~load_int(257);
+    var v'endAt = sc_0~load_int(257);
+    return (sc_0, (v'startAt, v'endAt));
+}
+
+((int, int)) $BurnParameters$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (int vvv'startAt, int vvv'endAt) = __tact_tuple_destroy_2(v);
+    return (vvv'startAt, vvv'endAt);
+}
+
+tuple $BurnParameters$_as_optional((int, int) v) inline {
+    var (v'startAt, v'endAt) = v;
+    return __tact_tuple_create_2(v'startAt, v'endAt);
+}
+
+;;
+;; Type: PayoutBeacon
+;;
+
+builder $PayoutBeacon$init$_store(builder build_0, (slice, slice) v) inline {
+    var (v'owner, v'master) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = __tact_store_address(build_0, v'master);
+    return build_0;
+}
+
+(cell, cell) $PayoutBeacon$_init_child(cell sys', slice $owner, slice $master) inline_ref {
+    slice sc' = sys'.begin_parse();
+    cell source = sc'~load_dict();
+    cell contracts = new_dict();
+    
+    ;; Contract Code: PayoutBeacon
+    cell mine = __tact_dict_get_code(source, 23527);
+    contracts = __tact_dict_set_code(contracts, 23527, mine);
+    
+    ;; Build cell
+    builder b = begin_cell();
+    b = b.store_ref(begin_cell().store_dict(contracts).end_cell());
+    b = b.store_int(false, 1);
+    b = $PayoutBeacon$init$_store(b, ($owner, $master));
+    return (mine, b.end_cell());
+}
+
+;;
+;; Type: PayoutsMaster
+;;
+
+builder $PayoutsMaster$_store(builder build_0, (slice, int, int, tuple) v) inline {
+    var (v'owner, v'publicKey, v'stopped, v'burn) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = build_0.store_uint(v'publicKey, 256);
+    build_0 = build_0.store_int(v'stopped, 1);
+    var build_1 = begin_cell();
+    build_1 = ~ null?(v'burn) ? build_1.store_int(true, 1).$BurnParameters$_store($BurnParameters$_not_null(v'burn)) : build_1.store_int(false, 1);
+    build_0 = store_ref(build_0, build_1.end_cell());
+    return build_0;
+}
+
+(slice, ((slice, int, int, tuple))) $PayoutsMaster$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    var v'publicKey = sc_0~load_uint(256);
+    var v'stopped = sc_0~load_int(1);
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'burn = sc_1~load_int(1) ? $BurnParameters$_as_optional(sc_1~$BurnParameters$_load()) : null();
+    return (sc_0, (v'owner, v'publicKey, v'stopped, v'burn));
+}
+
+(slice, ((slice, int, tuple))) $PayoutsMaster$init$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    var v'publicKey = sc_0~load_int(257);
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'burn = sc_1~load_int(1) ? $BurnParameters$_as_optional(sc_1~$BurnParameters$_load()) : null();
+    return (sc_0, (v'owner, v'publicKey, v'burn));
+}
+
+(slice, int, int, tuple) $PayoutsMaster$_contract_load() impure inline_ref {
+    slice $sc = get_data().begin_parse();
+    __tact_context_sys = $sc~load_ref();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$PayoutsMaster$_load();
+    } else {
+        ;; Allow only workchain deployments
+        throw_unless(137, my_address().preload_uint(11) == 1024);
+        (slice owner, int publicKey, tuple burn) = $sc~$PayoutsMaster$init$_load();
+        $sc.end_parse();
+        return $PayoutsMaster$_contract_init(owner, publicKey, burn);
+    }
+}
+
+() $PayoutsMaster$_contract_store((slice, int, int, tuple) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = b.store_int(true, 1);
+    b = $PayoutsMaster$_store(b, v);
+    set_data(b.end_cell());
+}

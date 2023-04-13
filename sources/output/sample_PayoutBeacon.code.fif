@@ -1,0 +1,542 @@
+PROGRAM{
+  DECLPROC __tact_verify_address
+  DECLPROC __tact_load_address
+  DECLPROC __tact_store_address
+  DECLPROC __tact_my_balance
+  DECLPROC __tact_not_null
+  DECLPROC __tact_context_get
+  DECLPROC __tact_context_get_sender
+  DECLPROC __tact_store_bool
+  DECLPROC __tact_slice_eq_bits
+  DECLPROC $Deploy$_load
+  DECLPROC $DeployOk$_store
+  DECLPROC $DeployOk$_store_cell
+  DECLPROC $TryPayout$_load
+  DECLPROC $PayoutOk$_store
+  DECLPROC $PayoutOk$_store_cell
+  DECLPROC $PayoutFailed$_store
+  DECLPROC $PayoutFailed$_store_cell
+  DECLPROC $PayoutBeacon$_store
+  DECLPROC $PayoutBeacon$_load
+  DECLPROC $StateInit$_not_null
+  DECLPROC $PayoutBeacon$init$_load
+  DECLPROC $PayoutBeacon$_contract_init
+  DECLPROC $PayoutBeacon$_contract_load
+  DECLPROC $PayoutBeacon$_contract_store
+  DECLPROC $global_send
+  DECLPROC $PayoutBeacon$_fun_master
+  DECLPROC $PayoutBeacon$_fun_completed
+  DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
+  DECLPROC $PayoutBeacon$_fun_forward
+  DECLPROC $PayoutBeacon$_fun_notify
+  DECLPROC $PayoutBeacon$_fun_owner
+  DECLPROC $PayoutOk$_constructor_value_address
+  DECLPROC $PayoutFailed$_constructor_value_address
+  DECLPROC $DeployOk$_constructor_queryId
+  DECLPROC $PayoutBeacon$_internal_binary_TryPayout
+  DECLPROC $PayoutBeacon$_receive_bounce
+  DECLPROC $PayoutBeacon$_internal_binary_Deploy
+  120253 DECLMETHOD %master
+  79554 DECLMETHOD %completed
+  83229 DECLMETHOD %owner
+  113617 DECLMETHOD supported_interfaces
+  121275 DECLMETHOD get_abi_ipfs
+  115390 DECLMETHOD lazy_deployment_completed
+  DECLPROC $PayoutBeacon$_contract_router_internal
+  DECLPROC recv_internal
+  DECLGLOBVAR __tact_context
+  DECLGLOBVAR __tact_context_sender
+  DECLGLOBVAR __tact_context_sys
+  DECLGLOBVAR __tact_randomized
+  __tact_verify_address PROCINLINE:<{
+    DUP
+    SBITS
+    267 PUSHINT
+    EQUAL
+    136 THROWIFNOT
+    DUP
+    11 PLDU
+    DUP
+    1279 PUSHINT
+    EQUAL
+    137 THROWIF
+    10 PUSHPOW2
+    EQUAL
+    136 THROWIFNOT
+  }>
+  __tact_load_address PROCINLINE:<{
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+  }>
+  __tact_store_address PROCINLINE:<{
+    __tact_verify_address INLINECALLDICT
+    STSLICER
+  }>
+  __tact_my_balance PROCINLINE:<{
+    BALANCE
+    FIRST
+  }>
+  __tact_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+  }>
+  __tact_context_get PROCINLINE:<{
+    __tact_context GETGLOB
+    4 UNTUPLE
+  }>
+  __tact_context_get_sender PROCINLINE:<{
+    __tact_context_sender GETGLOB
+  }>
+  __tact_store_bool PROCINLINE:<{
+    SWAP
+    1 STI
+  }>
+  __tact_slice_eq_bits PROCINLINE:<{
+    SDEQ
+  }>
+  $Deploy$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    2490013878 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    64 LDU
+    SWAP
+  }>
+  $DeployOk$_store PROCINLINE:<{
+    2952335191 PUSHINT
+    ROT
+    32 STU
+    64 STU
+  }>
+  $DeployOk$_store_cell PROCINLINE:<{
+    NEWC
+    SWAP
+    $DeployOk$_store INLINECALLDICT
+    ENDC
+  }>
+  $TryPayout$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    2291174705 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    __tact_load_address INLINECALLDICT
+    SWAP
+    257 PUSHINT
+    LDIX
+    -ROT
+  }>
+  $PayoutOk$_store PROCINLINE:<{
+    2768106894 PUSHINT
+    s0 s3 XCHG2
+    32 STU
+    SWAP
+    __tact_store_address INLINECALLDICT
+    257 PUSHINT
+    STIX
+  }>
+  $PayoutOk$_store_cell PROCINLINE:<{
+    NEWC
+    -ROT
+    $PayoutOk$_store INLINECALLDICT
+    ENDC
+  }>
+  $PayoutFailed$_store PROCINLINE:<{
+    2812389767 PUSHINT
+    s0 s3 XCHG2
+    32 STU
+    SWAP
+    __tact_store_address INLINECALLDICT
+    257 PUSHINT
+    STIX
+  }>
+  $PayoutFailed$_store_cell PROCINLINE:<{
+    NEWC
+    -ROT
+    $PayoutFailed$_store INLINECALLDICT
+    ENDC
+  }>
+  $PayoutBeacon$_store PROCINLINE:<{
+    2SWAP
+    __tact_store_address INLINECALLDICT
+    ROT
+    __tact_store_address INLINECALLDICT
+    1 STI
+  }>
+  $PayoutBeacon$_load PROCINLINE:<{
+    __tact_load_address INLINECALLDICT
+    SWAP
+    __tact_load_address INLINECALLDICT
+    SWAP
+    1 LDI
+    3 -ROLL
+  }>
+  $StateInit$_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+    2 UNTUPLE
+  }>
+  $PayoutBeacon$init$_load PROCINLINE:<{
+    __tact_load_address INLINECALLDICT
+    SWAP
+    __tact_load_address INLINECALLDICT
+    s1 s2 XCHG
+  }>
+  $PayoutBeacon$_contract_init PROCREF:<{
+    FALSE
+  }>
+  $PayoutBeacon$_contract_load PROCREF:<{
+    c4 PUSH
+    CTOS
+    LDREF
+    SWAP
+    __tact_context_sys SETGLOB
+    1 LDI
+    SWAP
+    IFJMP:<{
+      $PayoutBeacon$_load INLINECALLDICT
+      1 3 BLKDROP2
+    }>
+    MYADDR
+    11 PLDU
+    10 PUSHPOW2
+    EQUAL
+    137 THROWIFNOT
+    $PayoutBeacon$init$_load INLINECALLDICT
+    s0 s2 XCHG
+    ENDS
+    SWAP
+    $PayoutBeacon$_contract_init INLINECALLDICT
+  }>
+  $PayoutBeacon$_contract_store PROCINLINE:<{
+    NEWC
+    __tact_context_sys GETGLOB
+    SWAP
+    STREF
+    TRUE
+    SWAP
+    1 STI
+    3 -ROLL
+    $PayoutBeacon$_store INLINECALLDICT
+    ENDC
+    c4 POP
+  }>
+  $global_send PROCREF:<{
+    NEWC
+    1 PUSHINT
+    SWAP
+    2 STI
+    s0 s7 XCHG2
+    __tact_store_bool INLINECALLDICT
+    0 PUSHINT
+    SWAP
+    3 STI
+    s0 s5 XCHG2
+    __tact_store_address INLINECALLDICT
+    s0 s3 XCHG2
+    STGRAMS
+    0 PUSHINT
+    SWAP
+    105 STI
+    s3 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+    }>ELSE<{
+      s4 PUSH
+      ISNULL
+      NOT
+    }>
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      NEWC
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      ENDC
+      ROT
+      STREF
+    }>ELSE<{
+      s3 POP
+      s3 POP
+      SWAP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      SWAP
+      __tact_not_null INLINECALLDICT
+      SWAP
+      STREF
+    }>ELSE<{
+      NIP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    ENDC
+    SWAP
+    SENDRAWMSG
+  }>
+  $PayoutBeacon$_fun_master PROCREF:<{
+    OVER
+  }>
+  $PayoutBeacon$_fun_completed PROCREF:<{
+    DUP
+  }>
+  $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
+  }>
+  $PayoutBeacon$_fun_forward PROCREF:<{
+    PUSHNULL
+    PUSHNULL
+    s2 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      2DROP
+      $StateInit$_not_null INLINECALLDICT
+      SWAP
+    }>ELSE<{
+      s2 POP
+    }>
+    __tact_context_get INLINECALLDICT
+    s1 s3 XCHG
+    3 BLKDROP
+    __tact_my_balance INLINECALLDICT
+    SWAP
+    SUB
+    100000000 PUSHINT
+    LESS
+    IFJMP:<{
+      100000000 PUSHINT
+      0 PUSHINT
+      RAWRESERVE
+      s2 s4 XCHG
+      0 PUSHINT
+      s0 s3 XCHG
+      s0 s4 XCHG
+      130 PUSHINT
+      s2 s3 XCHG2
+      $SendParameters$_constructor_bounce_to_value_mode_body_code_data INLINECALLDICT
+      $global_send INLINECALLDICT
+    }>
+    s2 s4 XCHG
+    0 PUSHINT
+    s0 s3 XCHG
+    s0 s4 XCHG
+    66 PUSHINT
+    s2 s3 XCHG2
+    $SendParameters$_constructor_bounce_to_value_mode_body_code_data INLINECALLDICT
+    $global_send INLINECALLDICT
+  }>
+  $PayoutBeacon$_fun_notify PROCINLINE:<{
+    __tact_context_get_sender INLINECALLDICT
+    SWAP
+    FALSE
+    PUSHNULL
+    $PayoutBeacon$_fun_forward INLINECALLDICT
+  }>
+  $PayoutBeacon$_fun_owner PROCREF:<{
+    s2 PUSH
+  }>
+  $PayoutOk$_constructor_value_address PROCINLINE:<{
+    SWAP
+  }>
+  $PayoutFailed$_constructor_value_address PROCINLINE:<{
+    SWAP
+  }>
+  $DeployOk$_constructor_queryId PROCINLINE:<{
+  }>
+  $PayoutBeacon$_internal_binary_TryPayout PROCINLINE:<{
+    NIP
+    __tact_context_get INLINECALLDICT
+    s2 s3 XCHG
+    3 BLKDROP
+    4429 PUSHINT
+    s4 s1 PUSH2
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    s2 PUSH
+    NOT
+    IF:<{
+      s2 POP
+      TRUE
+      s1 s4 XCPU
+      $PayoutOk$_constructor_value_address INLINECALLDICT
+      $PayoutOk$_store_cell INLINECALLDICT
+      s1 s2 XCHG
+      TRUE
+      PUSHNULL
+      $PayoutBeacon$_fun_forward INLINECALLDICT
+    }>ELSE<{
+      s1 s4 XCPU
+      $PayoutFailed$_constructor_value_address INLINECALLDICT
+      $PayoutFailed$_store_cell INLINECALLDICT
+      FALSE
+      PUSHNULL
+      $PayoutBeacon$_fun_forward INLINECALLDICT
+    }>
+  }>
+  $PayoutBeacon$_receive_bounce PROCINLINE:<{
+    NIP
+    __tact_load_address INLINECALLDICT
+    NIP
+    4429 PUSHINT
+    s2 s1 PUSH2
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    FALSE
+    B{b5ee9c72410101010013000022000000005061796f7574206661696c6564ad44bad5} B>boc PUSHREF
+    s1 s2 XCHG
+    FALSE
+    PUSHNULL
+    $PayoutBeacon$_fun_forward INLINECALLDICT
+  }>
+  $PayoutBeacon$_internal_binary_Deploy PROCINLINE:<{
+    $DeployOk$_constructor_queryId INLINECALLDICT
+    $DeployOk$_store_cell INLINECALLDICT
+    $PayoutBeacon$_fun_notify INLINECALLDICT
+  }>
+  %master PROC:<{
+    $PayoutBeacon$_contract_load INLINECALLDICT
+    $PayoutBeacon$_fun_master INLINECALLDICT
+    3 1 BLKDROP2
+  }>
+  %completed PROC:<{
+    $PayoutBeacon$_contract_load INLINECALLDICT
+    $PayoutBeacon$_fun_completed INLINECALLDICT
+    3 1 BLKDROP2
+  }>
+  %owner PROC:<{
+    $PayoutBeacon$_contract_load INLINECALLDICT
+    $PayoutBeacon$_fun_owner INLINECALLDICT
+    3 1 BLKDROP2
+  }>
+  supported_interfaces PROC:<{
+    123515602279859691144772641439386770278 PUSHINT
+    209801025412363888721030803524359905849 PUSHINT
+    42980537499636128163026532310500881091 PUSHINT
+    209474421377847335869795010607481022628 PUSHINT
+    86142586315491086060343270784266291122 PUSHINT
+  }>
+  get_abi_ipfs PROC:<{
+    x{697066733a2f2f516d533276627174517078506e34656265686642647a55784773764b77357675315636376236676a375a3532486d} PUSHSLICE
+  }>
+  lazy_deployment_completed PROC:<{
+    c4 PUSH
+    CTOS
+    1 LDI
+    SWAP
+  }>
+  $PayoutBeacon$_contract_router_internal PROCREF:<{
+    SWAP
+    IFJMP:<{
+      32 PUSHINT
+      SDSKIPFIRST
+      $PayoutBeacon$_receive_bounce INLINECALLDICT
+      TRUE
+    }>
+    0 PUSHINT
+    OVER
+    SBITS
+    31 GTINT
+    IF:<{
+      DROP
+      DUP
+      32 PLDU
+    }>
+    DUP
+    2291174705 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $TryPayout$_load INLINECALLDICT
+      1 2 BLKDROP2
+      $PayoutBeacon$_internal_binary_TryPayout INLINECALLDICT
+      TRUE
+    }>
+    2490013878 PUSHINT
+    EQUAL
+    IFJMP:<{
+      $Deploy$_load INLINECALLDICT
+      NIP
+      $PayoutBeacon$_internal_binary_Deploy INLINECALLDICT
+      TRUE
+    }>
+    DROP
+    FALSE
+  }>
+  recv_internal PROC:<{
+    SWAP
+    CTOS
+    4 LDU
+    SWAP
+    1 PUSHINT
+    AND
+    NEGATE
+    SWAP
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+    s0 s4 s2 PUXCPU
+    s0 s3 XCHG
+    4 TUPLE
+    __tact_context SETGLOB
+    s0 s2 XCHG
+    __tact_context_sender SETGLOB
+    $PayoutBeacon$_contract_load INLINECALLDICT
+    2 3 BLKSWAP
+    $PayoutBeacon$_contract_router_internal INLINECALLDICT
+    130 THROWIFNOT
+    $PayoutBeacon$_contract_store INLINECALLDICT
+  }>
+}END>c

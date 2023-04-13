@@ -1,25 +1,14 @@
-# TACT template project
+# TACT Payouts Contract
 
-This project has ready to use TACT compiler, typescript + jest with [tact-emulator](https://github.com/tact-lang/tact-emulator), example how to do tests.
+This contract is a perfect solution to perform on-chain payouts after your project failed. This contracts works by generating an list of text tickets for each address that is entitled for a payout. Tickets are essentially a signed transactions serialized to a comment to be parsed by smart contract. Tickets are best to be generated using offline machine and secret key to be discarded after the generation. You MUST use a new key for each contract to avoid replay attacks.
 
-```bash
-yarn test # To test contract
-yarn build # To build contract
-yarn deploy # To deploy contract
-```
-## Deployment
+## Features
 
-To deploy contract you should:
-
-1) Specify `contract.tact` that will be used as entry point of your contract
-2) Configure `contract.deploy.ts` according to your `contract.tact` to generate a deployment link. In particular, it is necessary to correctly call the Init() function from the contract.
-
-If you renamed `contract.tact` to something else, you need to update `tact.config.json` correspondingly. For more information , see [Tact Documentation](https://docs.tact-lang.org/language/guides/config)
-## Testing
-
-Example of contract tests are in `contract.spec.ts`. For more information about testing, see [Tact Documentation](https://docs.tact-lang.org/language/guides/debug)
-
-To add new test files to contract you should create `*.spec.ts` files similar to template's one and they would be automatically included in testing.
+* 🔐 Secure. No need to have hot wallets with funds. Key can be discarded after the ticket generation.
+* 📝 Easy to use and commercially feasible.
+* ⛽️ Minimal gas usage. Most of the gas fees are paid by the payee (~0.1 TON)
+* ⏯️ Start, stop and abort payouts at any time.
+* 🔥 Ability to slowly burn balances if no one claims the payout.
 
 ## Licence
 
