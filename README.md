@@ -10,6 +10,6 @@ This contract is a perfect solution to perform on-chain payouts after your proje
 * ⏯️ Start, stop and abort payouts at any time.
 * 🔥 Ability to slowly burn balances if no one claims the payout.
 
-## Licence
+## License
 
-MIT
+Business Source License 1.1

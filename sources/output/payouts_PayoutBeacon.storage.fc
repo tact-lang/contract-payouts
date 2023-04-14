@@ -57,28 +57,28 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: TryPayout
-;; Header: 0x88908d31
-;; TLB: try_payout#88908d31 address:address value:int257 = TryPayout
+;; Header: 0x60912f1f
+;; TLB: try_payout#60912f1f address:address value:coins = TryPayout
 ;;
 
 (slice, ((slice, int))) $TryPayout$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2291174705);
+    throw_unless(129, sc_0~load_uint(32) == 1620127519);
     var v'address = sc_0~__tact_load_address();
-    var v'value = sc_0~load_int(257);
+    var v'value = sc_0~load_coins();
     return (sc_0, (v'address, v'value));
 }
 
 ;;
 ;; Type: PayoutOk
-;; Header: 0xa4fdf58e
-;; TLB: payout_ok#a4fdf58e address:address value:int257 = PayoutOk
+;; Header: 0xd90aaa12
+;; TLB: payout_ok#d90aaa12 address:address value:coins = PayoutOk
 ;;
 
 builder $PayoutOk$_store(builder build_0, (slice, int) v) inline {
     var (v'address, v'value) = v;
-    build_0 = store_uint(build_0, 2768106894, 32);
+    build_0 = store_uint(build_0, 3641354770, 32);
     build_0 = __tact_store_address(build_0, v'address);
-    build_0 = build_0.store_int(v'value, 257);
+    build_0 = build_0.store_coins(v'value);
     return build_0;
 }
 
@@ -92,15 +92,15 @@ cell $PayoutOk$_store_cell((slice, int) v) inline {
 
 ;;
 ;; Type: PayoutFailed
-;; Header: 0xa7a1a987
-;; TLB: payout_failed#a7a1a987 address:address value:int257 = PayoutFailed
+;; Header: 0x25bd488e
+;; TLB: payout_failed#25bd488e address:address value:coins = PayoutFailed
 ;;
 
 builder $PayoutFailed$_store(builder build_0, (slice, int) v) inline {
     var (v'address, v'value) = v;
-    build_0 = store_uint(build_0, 2812389767, 32);
+    build_0 = store_uint(build_0, 633161870, 32);
     build_0 = __tact_store_address(build_0, v'address);
-    build_0 = build_0.store_int(v'value, 257);
+    build_0 = build_0.store_coins(v'value);
     return build_0;
 }
 

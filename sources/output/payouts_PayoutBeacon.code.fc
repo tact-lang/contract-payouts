@@ -2,10 +2,10 @@
 #pragma allow-post-modification;
 #pragma compute-asm-ltr;
 
-#include "sample_PayoutBeacon.headers.fc";
-#include "sample_PayoutBeacon.stdlib.fc";
-#include "sample_PayoutBeacon.constants.fc";
-#include "sample_PayoutBeacon.storage.fc";
+#include "payouts_PayoutBeacon.headers.fc";
+#include "payouts_PayoutBeacon.stdlib.fc";
+#include "payouts_PayoutBeacon.constants.fc";
+#include "payouts_PayoutBeacon.storage.fc";
 
 ;;
 ;; Contract PayoutBeacon functions
@@ -101,7 +101,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmS2vbqtQpxPn4ebehfBdzUxGsvKw5vu1V67b6gj7Z52Hm";
+    return "ipfs://QmTLD29m178TXo18ckE1JHxnwtEu99FiJ8TYFatmuw1tJr";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -131,7 +131,7 @@ _ lazy_deployment_completed() method_id {
     
     
     ;; Receive TryPayout message
-    if (op == 2291174705) {
+    if (op == 1620127519) {
         var msg = in_msg~$TryPayout$_load();
         self~$PayoutBeacon$_internal_binary_TryPayout(msg);
         return (self, true);

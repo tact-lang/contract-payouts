@@ -2,8 +2,11 @@
 #pragma allow-post-modification;
 #pragma compute-asm-ltr;
 
-;; Comment "OK"
-cell __gen_cell_comment_dbe1c797d6d2d914c463173b1da531103d2efe747471212d1fad170fcf0c75d2() asm "B{b5ee9c7241010101000800000c000000004f4b86af522d} B>boc PUSHREF";
+;; Comment "Payout completed"
+cell __gen_cell_comment_6be22126f3f2d13888fdf30eb7bcf29b2555e01b1452a5e5e2088a0f41f4da7d() asm "B{b5ee9c72410101010016000028000000005061796f757420636f6d706c657465649bed7ab4} B>boc PUSHREF";
+
+;; Comment "Withdraw Completed"
+cell __gen_cell_comment_cd1c8b4d5ebc37bffe62aa6938fac543df703846f4965df7d826babb5998a6cf() asm "B{b5ee9c7241010101001800002c00000000576974686472617720436f6d706c65746564a728c7d2} B>boc PUSHREF";
 
 ;; Comment "Already withdrawn"
 cell __gen_cell_comment_ca2e2e41ec6856c7bbd899bcfd500eb117c5f32a29330cf418e4ca98056f4a72() asm "B{b5ee9c7241010101001700002a00000000416c72656164792077697468647261776ee8b1aaae} B>boc PUSHREF";

@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: PayoutsMaster
-BOC Size: 2243 bytes
+BOC Size: 2359 bytes
 
 # Types
-Total Types: 12
+Total Types: 13
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -38,20 +38,24 @@ TLB: `change_owner_ok#327b2b4a queryId:uint64 newOwner:address = ChangeOwnerOk`
 Signature: `ChangeOwnerOk{queryId:uint64,newOwner:address}`
 
 ## TryPayout
-TLB: `try_payout#88908d31 address:address value:int257 = TryPayout`
-Signature: `TryPayout{address:address,value:int257}`
+TLB: `try_payout#60912f1f address:address value:coins = TryPayout`
+Signature: `TryPayout{address:address,value:coins}`
 
 ## PayoutOk
-TLB: `payout_ok#a4fdf58e address:address value:int257 = PayoutOk`
-Signature: `PayoutOk{address:address,value:int257}`
+TLB: `payout_ok#d90aaa12 address:address value:coins = PayoutOk`
+Signature: `PayoutOk{address:address,value:coins}`
 
 ## PayoutFailed
-TLB: `payout_failed#a7a1a987 address:address value:int257 = PayoutFailed`
-Signature: `PayoutFailed{address:address,value:int257}`
+TLB: `payout_failed#25bd488e address:address value:coins = PayoutFailed`
+Signature: `PayoutFailed{address:address,value:coins}`
 
 ## BurnParameters
-TLB: `_ startAt:int257 endAt:int257 = BurnParameters`
-Signature: `BurnParameters{startAt:int257,endAt:int257}`
+TLB: `_ startAt:uint32 endAt:uint32 = BurnParameters`
+Signature: `BurnParameters{startAt:uint32,endAt:uint32}`
+
+## EventPayoutCompleted
+TLB: `event_payout_completed#3af7b4d6 address:address value:coins = EventPayoutCompleted`
+Signature: `EventPayoutCompleted{address:address,value:coins}`
 
 # Get Methods
 Total Get Methods: 2
@@ -86,6 +90,7 @@ Total Get Methods: 2
 136: Invalid address
 137: Masterchain support is not enabled for this contract
 4429: Invalid sender
+12724: Invalid burn parameters
 16059: Invalid value
 19204: Insufficient balance on master
 40368: Contract stopped

@@ -1,6 +1,6 @@
 {
     "projects": [{
-        "name": "sample",
+        "name": "payouts",
         "path": "./sources/contract.tact",
         "output": "./sources/output",
         "options":{

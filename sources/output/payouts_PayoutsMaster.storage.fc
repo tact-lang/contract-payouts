@@ -70,15 +70,15 @@ cell $DeployOk$_store_cell((int) v) inline {
 
 ;;
 ;; Type: TryPayout
-;; Header: 0x88908d31
-;; TLB: try_payout#88908d31 address:address value:int257 = TryPayout
+;; Header: 0x60912f1f
+;; TLB: try_payout#60912f1f address:address value:coins = TryPayout
 ;;
 
 builder $TryPayout$_store(builder build_0, (slice, int) v) inline {
     var (v'address, v'value) = v;
-    build_0 = store_uint(build_0, 2291174705, 32);
+    build_0 = store_uint(build_0, 1620127519, 32);
     build_0 = __tact_store_address(build_0, v'address);
-    build_0 = build_0.store_int(v'value, 257);
+    build_0 = build_0.store_coins(v'value);
     return build_0;
 }
 
@@ -92,45 +92,45 @@ cell $TryPayout$_store_cell((slice, int) v) inline {
 
 ;;
 ;; Type: PayoutOk
-;; Header: 0xa4fdf58e
-;; TLB: payout_ok#a4fdf58e address:address value:int257 = PayoutOk
+;; Header: 0xd90aaa12
+;; TLB: payout_ok#d90aaa12 address:address value:coins = PayoutOk
 ;;
 
 (slice, ((slice, int))) $PayoutOk$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2768106894);
+    throw_unless(129, sc_0~load_uint(32) == 3641354770);
     var v'address = sc_0~__tact_load_address();
-    var v'value = sc_0~load_int(257);
+    var v'value = sc_0~load_coins();
     return (sc_0, (v'address, v'value));
 }
 
 ;;
 ;; Type: PayoutFailed
-;; Header: 0xa7a1a987
-;; TLB: payout_failed#a7a1a987 address:address value:int257 = PayoutFailed
+;; Header: 0x25bd488e
+;; TLB: payout_failed#25bd488e address:address value:coins = PayoutFailed
 ;;
 
 (slice, ((slice, int))) $PayoutFailed$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2812389767);
+    throw_unless(129, sc_0~load_uint(32) == 633161870);
     var v'address = sc_0~__tact_load_address();
-    var v'value = sc_0~load_int(257);
+    var v'value = sc_0~load_coins();
     return (sc_0, (v'address, v'value));
 }
 
 ;;
 ;; Type: BurnParameters
-;; TLB: _ startAt:int257 endAt:int257 = BurnParameters
+;; TLB: _ startAt:uint32 endAt:uint32 = BurnParameters
 ;;
 
 builder $BurnParameters$_store(builder build_0, (int, int) v) inline {
     var (v'startAt, v'endAt) = v;
-    build_0 = build_0.store_int(v'startAt, 257);
-    build_0 = build_0.store_int(v'endAt, 257);
+    build_0 = build_0.store_uint(v'startAt, 32);
+    build_0 = build_0.store_uint(v'endAt, 32);
     return build_0;
 }
 
 (slice, ((int, int))) $BurnParameters$_load(slice sc_0) inline {
-    var v'startAt = sc_0~load_int(257);
-    var v'endAt = sc_0~load_int(257);
+    var v'startAt = sc_0~load_uint(32);
+    var v'endAt = sc_0~load_uint(32);
     return (sc_0, (v'startAt, v'endAt));
 }
 
@@ -182,9 +182,7 @@ builder $PayoutsMaster$_store(builder build_0, (slice, int, int, tuple) v) inlin
     build_0 = __tact_store_address(build_0, v'owner);
     build_0 = build_0.store_uint(v'publicKey, 256);
     build_0 = build_0.store_int(v'stopped, 1);
-    var build_1 = begin_cell();
-    build_1 = ~ null?(v'burn) ? build_1.store_int(true, 1).$BurnParameters$_store($BurnParameters$_not_null(v'burn)) : build_1.store_int(false, 1);
-    build_0 = store_ref(build_0, build_1.end_cell());
+    build_0 = ~ null?(v'burn) ? build_0.store_int(true, 1).$BurnParameters$_store($BurnParameters$_not_null(v'burn)) : build_0.store_int(false, 1);
     return build_0;
 }
 
@@ -192,16 +190,14 @@ builder $PayoutsMaster$_store(builder build_0, (slice, int, int, tuple) v) inlin
     var v'owner = sc_0~__tact_load_address();
     var v'publicKey = sc_0~load_uint(256);
     var v'stopped = sc_0~load_int(1);
-    slice sc_1 = sc_0~load_ref().begin_parse();
-    var v'burn = sc_1~load_int(1) ? $BurnParameters$_as_optional(sc_1~$BurnParameters$_load()) : null();
+    var v'burn = sc_0~load_int(1) ? $BurnParameters$_as_optional(sc_0~$BurnParameters$_load()) : null();
     return (sc_0, (v'owner, v'publicKey, v'stopped, v'burn));
 }
 
 (slice, ((slice, int, tuple))) $PayoutsMaster$init$_load(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
     var v'publicKey = sc_0~load_int(257);
-    slice sc_1 = sc_0~load_ref().begin_parse();
-    var v'burn = sc_1~load_int(1) ? $BurnParameters$_as_optional(sc_1~$BurnParameters$_load()) : null();
+    var v'burn = sc_0~load_int(1) ? $BurnParameters$_as_optional(sc_0~$BurnParameters$_load()) : null();
     return (sc_0, (v'owner, v'publicKey, v'burn));
 }
 

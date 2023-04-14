@@ -680,12 +680,12 @@
     ton-crypto "^3.2.0"
     zod "^3.20.2"
 
-"@tact-lang/coverage@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@tact-lang/coverage/-/coverage-0.0.5.tgz#8da0d25f2a48638712fe746bfd05491d14773afa"
-  integrity sha512-1vWP2DyXDTMFrThdX+oYCHus+7FpAYTF2Jx0zEfHMJi0g6QL/4zCOkouEBFrvueOtsOiTQKGR+IFgUcNzXjnFw==
+"@tact-lang/coverage@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@tact-lang/coverage/-/coverage-0.0.6.tgz#d4fff38a7a1f633b24c09c26a2cd79bb8966ec9e"
+  integrity sha512-oo/fg02/Z6Ly2G3Ml4bm7jl0nzxFO+/01vbhgPUlODJgIHPRz0EAx9Qx/nMjLVDdcvqT5feyrTx1fIBUVZwNUw==
   dependencies:
-    "@tact-lang/opcode" "^0.0.12"
+    "@tact-lang/opcode" "^0.0.13"
     glob "^9.3.2"
     prando "^6.0.1"
     teslabot "^1.5.0"
@@ -700,19 +700,14 @@
     form-data "^4.0.0"
     zod "^3.20.6"
 
-"@tact-lang/emulator@^3.4.1":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@tact-lang/emulator/-/emulator-3.4.1.tgz#974fef4859ef8977dcbaa665c05f296410791ef6"
-  integrity sha512-+elgvFUCmjqBPWTFcxiyWQM+CxP+r8nqcd59HxJ2YkboiarC3IkjTcXkXAKIP9gMFfNRrbYjF1w/iC+5Mylgew==
+"@tact-lang/emulator@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@tact-lang/emulator/-/emulator-4.0.0.tgz#69e7230109f20742040ce8700e25f1c915c8fca1"
+  integrity sha512-oltNXxUeR2qlYlCFpZnGELXeUPaVuiUscbvDy1IZ4oUIHXHpRXtGOp0brwFjdtDDDXmBofX0aifZn34i3fyhew==
   dependencies:
     prando "^6.0.1"
     teslabot "^1.5.0"
     zod "^3.20.2"
-
-"@tact-lang/opcode@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@tact-lang/opcode/-/opcode-0.0.12.tgz#a186dc6ffaac91da39bdbf55dc28bd330be7a26b"
-  integrity sha512-iSLoENXb5KlD15d2XaH8omhSZFlmoF/uRMpblggnlt9WLxogCDNkMODyNS1EijhkhzBlAzXZIByFvWTLZda3bQ==
 
 "@tact-lang/opcode@^0.0.13":
   version "0.0.13"

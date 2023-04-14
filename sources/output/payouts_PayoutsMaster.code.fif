@@ -186,13 +186,13 @@ PROGRAM{
     ENDC
   }>
   $TryPayout$_store PROCINLINE:<{
-    2291174705 PUSHINT
+    1620127519 PUSHINT
     s0 s3 XCHG2
     32 STU
     SWAP
     __tact_store_address INLINECALLDICT
-    257 PUSHINT
-    STIX
+    SWAP
+    STGRAMS
   }>
   $TryPayout$_store_cell PROCINLINE:<{
     NEWC
@@ -203,39 +203,33 @@ PROGRAM{
   $PayoutOk$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2768106894 PUSHINT
+    3641354770 PUSHINT
     EQUAL
     129 THROWIFNOT
     __tact_load_address INLINECALLDICT
     SWAP
-    257 PUSHINT
-    LDIX
+    LDGRAMS
     -ROT
   }>
   $PayoutFailed$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2812389767 PUSHINT
+    633161870 PUSHINT
     EQUAL
     129 THROWIFNOT
     __tact_load_address INLINECALLDICT
     SWAP
-    257 PUSHINT
-    LDIX
+    LDGRAMS
     -ROT
   }>
   $BurnParameters$_store PROCINLINE:<{
     s0 s2 XCHG
-    257 PUSHINT
-    STIX
-    257 PUSHINT
-    STIX
+    32 STU
+    32 STU
   }>
   $BurnParameters$_load PROCINLINE:<{
-    257 PUSHINT
-    LDIX
-    257 PUSHINT
-    LDIX
+    32 LDU
+    32 LDU
     -ROT
   }>
   $BurnParameters$_not_null PROCINLINE:<{
@@ -250,27 +244,21 @@ PROGRAM{
     256 STU
     s1 s2 XCHG
     1 STI
-    NEWC
-    s2 PUSH
+    OVER
     ISNULL
     NOT
     IF:<{
       TRUE
       SWAP
       1 STI
-      s0 s2 XCHG
+      SWAP
       $BurnParameters$_not_null INLINECALLDICT
-      s2 s3 XCHG
       $BurnParameters$_store INLINECALLDICT
     }>ELSE<{
-      s2 POP
       FALSE
-      ROT
+      s2 POP
       1 STI
     }>
-    ENDC
-    SWAP
-    STREF
   }>
   $BurnParameters$_as_optional PROCINLINE:<{
     2 TUPLE
@@ -280,17 +268,12 @@ PROGRAM{
     SWAP
     256 LDU
     1 LDI
-    LDREF
-    SWAP
-    CTOS
     1 LDI
     SWAP
     IF:<{
       $BurnParameters$_load INLINECALLDICT
-      1 2 BLKDROP2
       $BurnParameters$_as_optional INLINECALLDICT
     }>ELSE<{
-      DROP
       PUSHNULL
     }>
     s1 s4 XCHG
@@ -316,23 +299,32 @@ PROGRAM{
     SWAP
     257 PUSHINT
     LDIX
-    LDREF
-    SWAP
-    CTOS
     1 LDI
     SWAP
     IF:<{
       $BurnParameters$_load INLINECALLDICT
-      1 2 BLKDROP2
       $BurnParameters$_as_optional INLINECALLDICT
     }>ELSE<{
-      DROP
       PUSHNULL
     }>
     s3 s3 s0 XCHG3
   }>
   $PayoutsMaster$_contract_init PROCREF:<{
     FALSE
+    s1 s1 PUSH2
+    ISNULL
+    NOT
+    IF:<{
+      s0 s2 XCHG
+      $BurnParameters$_not_null INLINECALLDICT
+      SWAP
+      12724 PUSHINT
+      s0 s2 XCHG
+      LESS
+      THROWANYIFNOT
+    }>ELSE<{
+      s2 POP
+    }>
     SWAP
   }>
   $PayoutsMaster$_contract_load PROCREF:<{
@@ -721,53 +713,97 @@ PROGRAM{
   $DeployOk$_constructor_queryId PROCINLINE:<{
   }>
   $PayoutsMaster$_internal_any_text PROCINLINE:<{
-    4 -ROLL
-    $PayoutsMaster$_fun_requireNotStopped INLINECALLDICT
-    __tact_context_get INLINECALLDICT
-    DROP
-    16059 PUSHINT
-    s3 POP
-    1000000000 PUSHINT
-    GEQ
-    s1 s2 XCHG
-    THROWANYIFNOT
-    s0 s5 XCHG
-    $String$_fun_fromBase64 INLINECALLDICT
-    9 PUSHPOW2
-    LDSLICEX
-    LDGRAMS
-    DROP
-    NEWC
-    s7 PUSH
-    __tact_store_address INLINECALLDICT
-    OVER
-    STGRAMS
-    ENDC
-    HASHCU
-    48401 PUSHINT
-    s3 s6 XCPU
-    CHKSIGNU
-    s1 s2 XCHG
-    THROWANYIFNOT
-    __tact_context_sys GETGLOB
-    MYADDR
-    s7 s(-1) PUXC
-    $PayoutBeacon$_init_child INLINECALLDICT
-    2DUP
-    $global_contractAddress INLINECALLDICT
-    s8 s3 XCHG2
-    $TryPayout$_constructor_address_value INLINECALLDICT
-    $TryPayout$_store_cell INLINECALLDICT
-    SWAP
-    TRUE
-    s0 s8 XCHG
-    $StateInit$_as_optional INLINECALLDICT
-    s6 s7 XCHG
-    s5 s6 XCHG
-    s4 s5 XCHG
-    s3 s4 XCHG
-    s1 s3 s0 XCHG3
-    $PayoutsMaster$_fun_forward INLINECALLDICT
+    CONT:<{
+      c2 SAVE
+      SAMEALTSAVE
+      4 -ROLL
+      $PayoutsMaster$_fun_requireNotStopped INLINECALLDICT
+      __tact_context_get INLINECALLDICT
+      DROP
+      16059 PUSHINT
+      s3 POP
+      1000000000 PUSHINT
+      GEQ
+      s1 s2 XCHG
+      THROWANYIFNOT
+      s0 s5 XCHG
+      $String$_fun_fromBase64 INLINECALLDICT
+      9 PUSHPOW2
+      LDSLICEX
+      LDGRAMS
+      DROP
+      NEWC
+      s7 PUSH
+      __tact_store_address INLINECALLDICT
+      OVER
+      STGRAMS
+      ENDC
+      HASHCU
+      48401 PUSHINT
+      s3 s6 XCPU
+      CHKSIGNU
+      s1 s2 XCHG
+      THROWANYIFNOT
+      OVER
+      ISNULL
+      NOT
+      IF:<{
+        OVER
+        $BurnParameters$_not_null INLINECALLDICT
+        NOW
+        2DUP
+        LEQ
+        IFJMP:<{
+          4 BLKDROP
+          s4 POP
+          B{b5ee9c72410101010016000028000000005061796f757420636f6d706c657465649bed7ab4} B>boc PUSHREF
+          s3 s4 XCHG
+          s1 s3 s0 XCHG3
+          $PayoutsMaster$_fun_reply INLINECALLDICT
+          RETALT
+        }>
+        s0 s2 PUSH2
+        GEQ
+        IF:<{
+          s1 s(-1) PUXC
+          SUB
+          s1 s3 XCHG
+          MUL
+          -ROT
+          SUB
+          DIV
+        }>ELSE<{
+          3 BLKDROP
+        }>
+      }>
+      19204 PUSHINT
+      __tact_my_balance INLINECALLDICT
+      1100000000 PUSHINT
+      s3 PUSH
+      ADD
+      GREATER
+      THROWANYIFNOT
+      __tact_context_sys GETGLOB
+      MYADDR
+      s7 s(-1) PUXC
+      $PayoutBeacon$_init_child INLINECALLDICT
+      2DUP
+      $global_contractAddress INLINECALLDICT
+      s8 s3 XCHG2
+      $TryPayout$_constructor_address_value INLINECALLDICT
+      $TryPayout$_store_cell INLINECALLDICT
+      SWAP
+      TRUE
+      s0 s8 XCHG
+      $StateInit$_as_optional INLINECALLDICT
+      s6 s7 XCHG
+      s5 s6 XCHG
+      s4 s5 XCHG
+      s3 s4 XCHG
+      s1 s3 s0 XCHG3
+      $PayoutsMaster$_fun_forward INLINECALLDICT
+    }>
+    EXECUTE
   }>
   $PayoutsMaster$_internal_binary_PayoutOk PROCINLINE:<{
     4 2 BLKSWAP
@@ -786,13 +822,13 @@ PROGRAM{
     THROWANYIFNOT
     19204 PUSHINT
     __tact_my_balance INLINECALLDICT
-    1000000000 PUSHINT
+    1100000000 PUSHINT
     s7 PUSH
     ADD
     GREATER
     THROWANYIFNOT
     64 PUSHINT
-    B{b5ee9c7241010101000800000c000000004f4b86af522d} B>boc PUSHREF
+    B{b5ee9c7241010101001800002c00000000576974686472617720436f6d706c65746564a728c7d2} B>boc PUSHREF
     s3 s6 XCHG
     s1 s7 s0 XCHG3
     $SendParameters$_constructor_value_mode_to_body INLINECALLDICT
@@ -807,13 +843,20 @@ PROGRAM{
     $global_send INLINECALLDICT
   }>
   $PayoutsMaster$_internal_text_2dcb19a5b89db9d3377fc651c6f9b6b92db9be624060c62a50572cdc97968638 PROCINLINE:<{
-    $PayoutsMaster$_fun_requireOwner INLINECALLDICT
+    __tact_context_get INLINECALLDICT
+    DROP
+    16059 PUSHINT
+    s3 POP
+    1000000000 PUSHINT
+    GEQ
+    s1 s2 XCHG
+    THROWANYIFNOT
     100000000 PUSHINT
     2 PUSHINT
     FALSE
     B{b5ee9c72410101010016000028000000004465706f73697420726563656976656497afbae7} B>boc PUSHREF
-    s7 PUSH
-    -ROT
+    s3 s4 XCHG
+    s2 s3 XCHG
     $SendParameters$_constructor_value_mode_to_bounce_body INLINECALLDICT
     $global_send INLINECALLDICT
   }>
@@ -882,7 +925,7 @@ PROGRAM{
     192989407141549587419771644724066226057 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d66436362443675564a5477723832756e34666974695372734736777a76676d7559364e4a4c485a37757a4b58} PUSHSLICE
+    x{697066733a2f2f516d634e736a6f4d654c415a5769514671596d4a6e4e38355874366d3177683758374148466d634336624d467758} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -908,7 +951,7 @@ PROGRAM{
       32 PLDU
     }>
     DUP
-    2768106894 PUSHINT
+    3641354770 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
@@ -918,7 +961,7 @@ PROGRAM{
       TRUE
     }>
     DUP
-    2812389767 PUSHINT
+    633161870 PUSHINT
     EQUAL
     IFJMP:<{
       DROP

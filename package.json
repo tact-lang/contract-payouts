@@ -7,9 +7,9 @@
   },
   "dependencies": {
     "@tact-lang/compiler": "^1.1.0-beta.24",
-    "@tact-lang/coverage": "^0.0.5",
+    "@tact-lang/coverage": "^0.0.6",
     "@tact-lang/deployer": "^0.2.0",
-    "@tact-lang/emulator": "^3.4.1",
+    "@tact-lang/emulator": "^4.0.0",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.14",
     "@types/qs": "^6.9.7",
