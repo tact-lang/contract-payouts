@@ -55,17 +55,13 @@ contract PayoutBeacon with Ownable, Deployable {
         }
     }
 
-    bounced(msg: Slice) {
-
-        // Check sender
-        let address: Address = msg.loadAddress();
-        require(address == self.master, "Invalid sender");
+    bounced(msg: bounced<PayoutOk>) {
 
         // Reset completed flag is our message bounced
         self.completed = false;
 
-        // Reserve rollback
-        self.forward(address, "Payout failed".asComment(), false, null);
+        // Send notification
+        self.forward(self.owner, "Payout failed".asComment(), false, null);
     }
 
     get fun master(): Address {
@@ -156,6 +152,9 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
 
         // Require required balance
         require(myBalance() > ton("1.0") + self.storageReserve + ok.value, "Insufficient balance on master");
+
+        // Emit event
+        emit(EventPayoutCompleted{ address: ok.address, value: ok.value }.toCell());
 
         // Send the payout
         send(SendParameters{

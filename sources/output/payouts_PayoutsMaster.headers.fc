@@ -73,6 +73,12 @@ builder $BurnParameters$_store(builder build_0, (int, int) v) inline;
 ;; $BurnParameters$_load
 (slice, ((int, int))) $BurnParameters$_load(slice sc_0) inline;
 
+;; $EventPayoutCompleted$_store
+builder $EventPayoutCompleted$_store(builder build_0, (slice, int) v) inline;
+
+;; $EventPayoutCompleted$_store_cell
+cell $EventPayoutCompleted$_store_cell((slice, int) v) inline;
+
 ;; $BurnParameters$_not_null
 ((int, int)) $BurnParameters$_not_null(tuple v) inline;
 
@@ -111,6 +117,9 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 
 ;; $global_send
 () $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
+
+;; $global_emit
+() $global_emit(cell $body) impure inline;
 
 ;; $Builder$_fun_asSlice
 slice $Builder$_fun_asSlice(builder $self) impure inline;
@@ -153,6 +162,9 @@ slice $String$_fun_fromBase64(slice $self) impure inline;
 
 ;; $TryPayout$_constructor_address_value
 ((slice, int)) $TryPayout$_constructor_address_value(slice address, int value) inline;
+
+;; $EventPayoutCompleted$_constructor_address_value
+((slice, int)) $EventPayoutCompleted$_constructor_address_value(slice address, int value) inline;
 
 ;; $SendParameters$_constructor_value_mode_to_body
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_value_mode_to_body(int value, int mode, slice to, cell body) inline;

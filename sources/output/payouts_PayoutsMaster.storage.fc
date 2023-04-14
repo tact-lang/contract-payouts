@@ -146,6 +146,28 @@ tuple $BurnParameters$_as_optional((int, int) v) inline {
 }
 
 ;;
+;; Type: EventPayoutCompleted
+;; Header: 0x3af7b4d6
+;; TLB: event_payout_completed#3af7b4d6 address:address value:coins = EventPayoutCompleted
+;;
+
+builder $EventPayoutCompleted$_store(builder build_0, (slice, int) v) inline {
+    var (v'address, v'value) = v;
+    build_0 = store_uint(build_0, 989312214, 32);
+    build_0 = __tact_store_address(build_0, v'address);
+    build_0 = build_0.store_coins(v'value);
+    return build_0;
+}
+
+cell $EventPayoutCompleted$_store_cell((slice, int) v) inline {
+    return $EventPayoutCompleted$_store(begin_cell(), v).end_cell();
+}
+
+((slice, int)) $EventPayoutCompleted$_constructor_address_value(slice address, int value) inline {
+    return (address, value);
+}
+
+;;
 ;; Type: PayoutBeacon
 ;;
 

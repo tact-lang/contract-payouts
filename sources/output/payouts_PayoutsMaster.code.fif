@@ -21,6 +21,8 @@ PROGRAM{
   DECLPROC $PayoutFailed$_load
   DECLPROC $BurnParameters$_store
   DECLPROC $BurnParameters$_load
+  DECLPROC $EventPayoutCompleted$_store
+  DECLPROC $EventPayoutCompleted$_store_cell
   DECLPROC $BurnParameters$_not_null
   DECLPROC $PayoutsMaster$_store
   DECLPROC $BurnParameters$_as_optional
@@ -34,6 +36,7 @@ PROGRAM{
   DECLPROC $PayoutsMaster$_contract_store
   DECLPROC $global_contractAddress
   DECLPROC $global_send
+  DECLPROC $global_emit
   DECLPROC $Builder$_fun_asSlice
   DECLPROC $Slice$_fun_fromBase64
   DECLPROC $String$_fun_fromBase64
@@ -48,6 +51,7 @@ PROGRAM{
   DECLPROC $PayoutsMaster$_fun_requireStopped
   DECLPROC $PayoutsMaster$_fun_stopped
   DECLPROC $TryPayout$_constructor_address_value
+  DECLPROC $EventPayoutCompleted$_constructor_address_value
   DECLPROC $SendParameters$_constructor_value_mode_to_body
   DECLPROC $SendParameters$_constructor_value_mode_to_bounce_body
   DECLPROC $DeployOk$_constructor_queryId
@@ -231,6 +235,21 @@ PROGRAM{
     32 LDU
     32 LDU
     -ROT
+  }>
+  $EventPayoutCompleted$_store PROCINLINE:<{
+    989312214 PUSHINT
+    s0 s3 XCHG2
+    32 STU
+    SWAP
+    __tact_store_address INLINECALLDICT
+    SWAP
+    STGRAMS
+  }>
+  $EventPayoutCompleted$_store_cell PROCINLINE:<{
+    NEWC
+    -ROT
+    $EventPayoutCompleted$_store INLINECALLDICT
+    ENDC
   }>
   $BurnParameters$_not_null PROCINLINE:<{
     DUP
@@ -470,6 +489,16 @@ PROGRAM{
     SWAP
     SENDRAWMSG
   }>
+  $global_emit PROCINLINE:<{
+    NEWC
+    15211807202738752817960438464513 PUSHINT
+    SWAP
+    104 STU
+    STREF
+    ENDC
+    0 PUSHINT
+    SENDRAWMSG
+  }>
   $Builder$_fun_asSlice PROCINLINE:<{
     ENDC
     CTOS
@@ -697,6 +726,8 @@ PROGRAM{
   }>
   $TryPayout$_constructor_address_value PROCINLINE:<{
   }>
+  $EventPayoutCompleted$_constructor_address_value PROCINLINE:<{
+  }>
   $SendParameters$_constructor_value_mode_to_body PROCINLINE:<{
     TRUE
     s4 s1 s4 XCHG3
@@ -827,6 +858,10 @@ PROGRAM{
     ADD
     GREATER
     THROWANYIFNOT
+    s5 s4 PUSH2
+    $EventPayoutCompleted$_constructor_address_value INLINECALLDICT
+    $EventPayoutCompleted$_store_cell INLINECALLDICT
+    $global_emit INLINECALLDICT
     64 PUSHINT
     B{b5ee9c7241010101001800002c00000000576974686472617720436f6d706c65746564a728c7d2} B>boc PUSHREF
     s3 s6 XCHG

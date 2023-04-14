@@ -5,31 +5,31 @@ import { PayoutBeacon } from "./output/payouts_PayoutBeacon";
 import { createTicket } from "./contract.tickets";
 
 describe("contract-payouts", () => {
-  it("should payout correctly", async () => {
-    // Create keyparis
-    let keypair = testKey("keypair-test");
-    let publicKey = beginCell().storeBuffer(keypair.publicKey).endCell().beginParse().loadUintBig(256);
+    it("should payout correctly", async () => {
+        // Create keyparis
+        let keypair = testKey("keypair-test");
+        let publicKey = beginCell().storeBuffer(keypair.publicKey).endCell().beginParse().loadUintBig(256);
 
-    // Create contract system
-    let system = await ContractSystem.create();
-    let owner = system.treasure("owner");
-    expect(owner.address).toMatchInlineSnapshot(`kQAI-3FJVc_ywSuY4vq0bYrzR7S4Och4y7bTU_i5yLOB3A6P`);
-    let nonOwner = system.treasure("non-owner");
-    let nonOwner2 = system.treasure("non-owner-2");
-    let contract = system.open(await PayoutsMaster.fromInit(owner.address, publicKey, null));
-    let payeeBeaconContract = system.open(await PayoutBeacon.fromInit(nonOwner.address, contract.address));
-    system.name(contract, "master");
-    let track = system.track(contract.address);
-    await contract.send(owner, { value: toNano(1) }, { $$type: "Deploy", queryId: 0n });
-    await contract.send(owner, { value: toNano(100000) }, "Deposit");
-    await system.run();
+        // Create contract system
+        let system = await ContractSystem.create();
+        let owner = system.treasure("owner");
+        expect(owner.address).toMatchInlineSnapshot(`kQAI-3FJVc_ywSuY4vq0bYrzR7S4Och4y7bTU_i5yLOB3A6P`);
+        let nonOwner = system.treasure("non-owner");
+        let nonOwner2 = system.treasure("non-owner-2");
+        let contract = system.open(await PayoutsMaster.fromInit(owner.address, publicKey, null));
+        let payeeBeaconContract = system.open(await PayoutBeacon.fromInit(nonOwner.address, contract.address));
+        system.name(contract, "master");
+        let track = system.track(contract.address);
+        await contract.send(owner, { value: toNano(1) }, { $$type: "Deploy", queryId: 0n });
+        await contract.send(owner, { value: toNano(100000) }, "Deposit");
+        await system.run();
 
-    // Try to withdraw with a ticket for incorrect user
-    track.reset();
-    let ticket = createTicket(nonOwner.address, toNano(100), keypair.secretKey);
-    await contract.send(nonOwner2, { value: toNano(1) }, ticket);
-    await system.run();
-    expect(track.collect()).toMatchInlineSnapshot(`
+        // Try to withdraw with a ticket for incorrect user
+        track.reset();
+        let ticket = createTicket(nonOwner.address, toNano(100), keypair.secretKey);
+        await contract.send(nonOwner2, { value: toNano(1) }, ticket);
+        await system.run();
+        expect(track.collect()).toMatchInlineSnapshot(`
             [
               {
                 "$seq": 2,
@@ -76,13 +76,17 @@ describe("contract-payouts", () => {
             ]
         `);
 
-    // Try to withdraw with a ticket for correct user
-    await contract.send(nonOwner, { value: toNano(1) }, ticket);
-    await system.run();
-    expect((await payeeBeaconContract.getOwner()).toString({ testOnly: true })).toBe(nonOwner.address.toString({ testOnly: true }));
-    expect((await payeeBeaconContract.getCompleted())).toBe(true);
-    expect((await payeeBeaconContract.getMaster()).toString({ testOnly: true })).toBe(contract.address.toString({ testOnly: true }));
-    expect(track.collect()).toMatchInlineSnapshot(`
+        // Try to withdraw with a ticket for correct user
+        await contract.send(nonOwner, { value: toNano(1) }, ticket);
+        await system.run();
+        expect((await payeeBeaconContract.getOwner()).toString({ testOnly: true })).toBe(
+            nonOwner.address.toString({ testOnly: true })
+        );
+        expect(await payeeBeaconContract.getCompleted()).toBe(true);
+        expect((await payeeBeaconContract.getMaster()).toString({ testOnly: true })).toBe(
+            contract.address.toString({ testOnly: true })
+        );
+        expect(track.collect()).toMatchInlineSnapshot(`
             [
               {
                 "$seq": 3,
@@ -119,7 +123,7 @@ describe("contract-payouts", () => {
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQADq4ZEmAd1R5SlU0bmLAVwAMzecbwbrwUxSq5oVLnkprCu",
+                        "to": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
                         "type": "internal",
                         "value": "0.917541",
                       },
@@ -138,7 +142,7 @@ describe("contract-payouts", () => {
                         "type": "cell",
                       },
                       "bounce": true,
-                      "from": "kQADq4ZEmAd1R5SlU0bmLAVwAMzecbwbrwUxSq5oVLnkprCu",
+                      "from": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
                       "to": "@master",
                       "type": "internal",
                       "value": "0.804706",
@@ -169,10 +173,10 @@ describe("contract-payouts", () => {
             ]
         `);
 
-    // Try to withdraw second time
-    await contract.send(nonOwner, { value: toNano(1) }, ticket);
-    await system.run();
-    expect(track.collect()).toMatchInlineSnapshot(`
+        // Try to withdraw second time
+        await contract.send(nonOwner, { value: toNano(1) }, ticket);
+        await system.run();
+        expect(track.collect()).toMatchInlineSnapshot(`
             [
               {
                 "$seq": 5,
@@ -209,7 +213,7 @@ describe("contract-payouts", () => {
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQADq4ZEmAd1R5SlU0bmLAVwAMzecbwbrwUxSq5oVLnkprCu",
+                        "to": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
                         "type": "internal",
                         "value": "0.917541",
                       },
@@ -228,7 +232,7 @@ describe("contract-payouts", () => {
                         "type": "cell",
                       },
                       "bounce": false,
-                      "from": "kQADq4ZEmAd1R5SlU0bmLAVwAMzecbwbrwUxSq5oVLnkprCu",
+                      "from": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
                       "to": "@master",
                       "type": "internal",
                       "value": "0.905232993",
@@ -258,5 +262,5 @@ describe("contract-payouts", () => {
               },
             ]
         `);
-  });
+    });
 });

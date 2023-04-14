@@ -131,6 +131,11 @@ slice $global_contractAddress((cell, cell) $s) impure inline {
     send_raw_message($c, $params'mode);
 }
 
+() $global_emit(cell $body) impure inline {
+    cell $c = end_cell(store_ref(store_uint(begin_cell(), 15211807202738752817960438464513, 104), $body));
+    send_raw_message($c, 0);
+}
+
 slice $Builder$_fun_asSlice(builder $self) impure inline {
     var ($self) = $self;
     return begin_parse(end_cell($self));

@@ -86,6 +86,11 @@ cell $PayoutOk$_store_cell((slice, int) v) inline {
     return $PayoutOk$_store(begin_cell(), v).end_cell();
 }
 
+(slice, (tuple)) $PayoutOk$_load_bounced(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3641354770);
+    return (sc_0, null());
+}
+
 ((slice, int)) $PayoutOk$_constructor_value_address(int value, slice address) inline {
     return (address, value);
 }

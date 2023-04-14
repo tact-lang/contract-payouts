@@ -14,6 +14,7 @@ PROGRAM{
   DECLPROC $TryPayout$_load
   DECLPROC $PayoutOk$_store
   DECLPROC $PayoutOk$_store_cell
+  DECLPROC $PayoutOk$_load_bounced
   DECLPROC $PayoutFailed$_store
   DECLPROC $PayoutFailed$_store_cell
   DECLPROC $PayoutBeacon$_store
@@ -34,7 +35,7 @@ PROGRAM{
   DECLPROC $PayoutFailed$_constructor_value_address
   DECLPROC $DeployOk$_constructor_queryId
   DECLPROC $PayoutBeacon$_internal_binary_TryPayout
-  DECLPROC $PayoutBeacon$_receive_bounce
+  DECLPROC $PayoutBeacon$_receive_binary_bounce_PayoutOk
   DECLPROC $PayoutBeacon$_internal_binary_Deploy
   120253 DECLMETHOD %master
   79554 DECLMETHOD %completed
@@ -142,6 +143,14 @@ PROGRAM{
     -ROT
     $PayoutOk$_store INLINECALLDICT
     ENDC
+  }>
+  $PayoutOk$_load_bounced PROCINLINE:<{
+    32 LDU
+    SWAP
+    3641354770 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    PUSHNULL
   }>
   $PayoutFailed$_store PROCINLINE:<{
     633161870 PUSHINT
@@ -425,17 +434,11 @@ PROGRAM{
       $PayoutBeacon$_fun_forward INLINECALLDICT
     }>
   }>
-  $PayoutBeacon$_receive_bounce PROCINLINE:<{
-    NIP
-    __tact_load_address INLINECALLDICT
-    NIP
-    4429 PUSHINT
-    s2 s1 PUSH2
-    __tact_slice_eq_bits INLINECALLDICT
-    THROWANYIFNOT
+  $PayoutBeacon$_receive_binary_bounce_PayoutOk PROCINLINE:<{
+    2DROP
     FALSE
     B{b5ee9c72410101010013000022000000005061796f7574206661696c6564ad44bad5} B>boc PUSHREF
-    s1 s2 XCHG
+    s3 s(-1) PUXC
     FALSE
     PUSHNULL
     $PayoutBeacon$_fun_forward INLINECALLDICT
@@ -481,7 +484,24 @@ PROGRAM{
     IFJMP:<{
       32 PUSHINT
       SDSKIPFIRST
-      $PayoutBeacon$_receive_bounce INLINECALLDICT
+      0 PUSHINT
+      OVER
+      SBITS
+      31 GTINT
+      IF:<{
+        DROP
+        DUP
+        32 PLDU
+      }>
+      3641354770 PUSHINT
+      EQUAL
+      IFJMP:<{
+        $PayoutOk$_load_bounced INLINECALLDICT
+        NIP
+        $PayoutBeacon$_receive_binary_bounce_PayoutOk INLINECALLDICT
+        TRUE
+      }>
+      DROP
       TRUE
     }>
     0 PUSHINT

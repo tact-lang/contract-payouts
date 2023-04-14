@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: PayoutsMaster
-BOC Size: 2359 bytes
+BOC Size: 2432 bytes
 
 # Types
 Total Types: 13

@@ -52,6 +52,9 @@ builder $PayoutOk$_store(builder build_0, (slice, int) v) inline;
 ;; $PayoutOk$_store_cell
 cell $PayoutOk$_store_cell((slice, int) v) inline;
 
+;; $PayoutOk$_load_bounced
+(slice, (tuple)) $PayoutOk$_load_bounced(slice sc_0) inline;
+
 ;; $PayoutFailed$_store
 builder $PayoutFailed$_store(builder build_0, (slice, int) v) inline;
 

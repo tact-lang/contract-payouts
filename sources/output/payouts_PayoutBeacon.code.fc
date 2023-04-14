@@ -52,12 +52,11 @@
     return (($self'owner, $self'master, $self'completed), ());
 }
 
-((slice, slice, int), ()) $PayoutBeacon$_receive_bounce((slice, slice, int) $self, slice $msg) impure inline {
+(((slice, slice, int)), ()) $PayoutBeacon$_receive_binary_bounce_PayoutOk((slice, slice, int) $self, tuple $msg) impure inline {
     var ($self'owner, $self'master, $self'completed) = $self;
-    slice $address = $msg~__tact_load_address();
-    throw_unless(4429, ( __tact_slice_eq_bits($self'master, $address) ));
+    var $msg = $msg;
     $self'completed = false;
-    ($self'owner, $self'master, $self'completed)~$PayoutBeacon$_fun_forward($address, __gen_cell_comment_78b0aaadc117be03d1b8403b36288b7cdcb49676035c923368c2baf21da6ea04(), false, null());
+    ($self'owner, $self'master, $self'completed)~$PayoutBeacon$_fun_forward($self'owner, __gen_cell_comment_78b0aaadc117be03d1b8403b36288b7cdcb49676035c923368c2baf21da6ea04(), false, null());
     return (($self'owner, $self'master, $self'completed), ());
 }
 
@@ -115,10 +114,22 @@ _ lazy_deployment_completed() method_id {
 ((slice, slice, int), int) $PayoutBeacon$_contract_router_internal((slice, slice, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
+        
         ;; Skip 0xFFFFFFFF
         in_msg~skip_bits(32);
         
-        self~$PayoutBeacon$_receive_bounce(in_msg);
+        ;; Parse op
+        int op = 0;
+        if (slice_bits(in_msg) >= 32) {
+            op = in_msg.preload_uint(32);
+        }
+        
+        ;; Bounced handler for PayoutOk message
+        if (op == 3641354770) {
+            var msg = in_msg~$PayoutOk$_load_bounced();
+            self~$PayoutBeacon$_receive_binary_bounce_PayoutOk(msg);
+            return (self, true);
+        }
         
         return (self, true);
     }

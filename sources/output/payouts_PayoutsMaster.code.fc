@@ -95,6 +95,7 @@
     slice $beaconAddress = $global_contractAddress(($init'code, $init'data));
     throw_unless(4429, ( __tact_slice_eq_bits($beaconAddress, $ctx'sender) ));
     throw_unless(19204, (__tact_my_balance() > ((1000000000 + 100000000) + $ok'value)));
+    $global_emit($EventPayoutCompleted$_store_cell($EventPayoutCompleted$_constructor_address_value($ok'address, $ok'value)));
     $global_send($SendParameters$_constructor_value_mode_to_body($ok'value, 64, $ok'address, __gen_cell_comment_cd1c8b4d5ebc37bffe62aa6938fac543df703846f4965df7d826babb5998a6cf()));
     return (($self'owner, $self'publicKey, $self'stopped, $self'burn), ());
 }
