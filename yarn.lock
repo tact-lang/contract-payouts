@@ -659,10 +659,10 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
-"@tact-lang/compiler@^1.1.0-beta.26":
-  version "1.1.0-beta.26"
-  resolved "https://registry.yarnpkg.com/@tact-lang/compiler/-/compiler-1.1.0-beta.26.tgz#dc779e6f3fdca6a2a868a9ba701806e53be0bca1"
-  integrity sha512-8iVL7XtuZW0bMBnYhOQGvsQk5HxRUgWu5xdNYm1NGTQoCLqgK1ENe+Ojin48CO0DyHe1OmLgB+uArZQwLL25ug==
+"@tact-lang/compiler@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@tact-lang/compiler/-/compiler-1.1.2.tgz#e02e9eb81d3e3acb5764a8857f831ca127263ea5"
+  integrity sha512-1XiwaRA7h1AM5b/nB9T5sXVidXZCOEXpWuhWOUyLvaJDjfICBaQfvRCUCHy5c7sP6WoPXlyZOsofXqh9yO9Lpg==
   dependencies:
     "@ipld/dag-pb" "2.1.18"
     "@tact-lang/opcode" "^0.0.13"
@@ -680,10 +680,10 @@
     ton-crypto "^3.2.0"
     zod "^3.20.2"
 
-"@tact-lang/coverage@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@tact-lang/coverage/-/coverage-0.0.6.tgz#d4fff38a7a1f633b24c09c26a2cd79bb8966ec9e"
-  integrity sha512-oo/fg02/Z6Ly2G3Ml4bm7jl0nzxFO+/01vbhgPUlODJgIHPRz0EAx9Qx/nMjLVDdcvqT5feyrTx1fIBUVZwNUw==
+"@tact-lang/coverage@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@tact-lang/coverage/-/coverage-0.0.7.tgz#811347f33239656c3d26d9a69d03298024388f69"
+  integrity sha512-lNnmhfZU9nFmPyQbGRbOqhzLPGZ4RrTgmODslHNQ1uno8eIpulqbu8n/jH6t7DBYh/bvCLVlxJq9xVDMrR7O0w==
   dependencies:
     "@tact-lang/opcode" "^0.0.13"
     glob "^9.3.2"
@@ -700,10 +700,10 @@
     form-data "^4.0.0"
     zod "^3.20.6"
 
-"@tact-lang/emulator@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@tact-lang/emulator/-/emulator-4.0.0.tgz#69e7230109f20742040ce8700e25f1c915c8fca1"
-  integrity sha512-oltNXxUeR2qlYlCFpZnGELXeUPaVuiUscbvDy1IZ4oUIHXHpRXtGOp0brwFjdtDDDXmBofX0aifZn34i3fyhew==
+"@tact-lang/emulator@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@tact-lang/emulator/-/emulator-4.2.1.tgz#869881a2bc0add05fec9a6deb0c6086e75d7c97f"
+  integrity sha512-fPR8Q2Bd5ZurCmi/XJt3CASf1ELBumu90xSPZLghkVR046N55aoT/aUfoksx1g/DS6vo7HXR7oV2xV/rEc3h/w==
   dependencies:
     prando "^6.0.1"
     teslabot "^1.5.0"
@@ -2862,6 +2862,11 @@ to-regex-range@^5.0.1:
   integrity sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==
   dependencies:
     is-number "^7.0.0"
+
+ton-abi@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/ton-abi/-/ton-abi-0.0.2.tgz#57e624e2ce319eb65b5eeb1972ea5dfb88736738"
+  integrity sha512-RDlSNDFgC8K+aavCMO8w+AsRFK7RvKldbVpfk4neQrDLpn8DtUbDeHp0p9xoL2PhVNe6wUws8qonngzMbNLjHg==
 
 ton-core@>=0.49.0:
   version "0.49.0"

@@ -13,6 +13,9 @@ import {
     Sender, 
     Contract, 
     ContractABI, 
+    ABIType,
+    ABIGetter,
+    ABIReceiver,
     TupleBuilder,
     DictionaryValue
 } from 'ton-core';
@@ -706,6 +709,39 @@ const PayoutsMaster_errors: { [key: number]: { message: string } } = {
     53296: { message: `Contract not stopped` },
 }
 
+const PayoutsMaster_types: ABIType[] = [
+    {"name":"StateInit","header":null,"fields":[{"name":"code","type":{"kind":"simple","type":"cell","optional":false}},{"name":"data","type":{"kind":"simple","type":"cell","optional":false}}]},
+    {"name":"Context","header":null,"fields":[{"name":"bounced","type":{"kind":"simple","type":"bool","optional":false}},{"name":"sender","type":{"kind":"simple","type":"address","optional":false}},{"name":"value","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"raw","type":{"kind":"simple","type":"slice","optional":false}}]},
+    {"name":"SendParameters","header":null,"fields":[{"name":"bounce","type":{"kind":"simple","type":"bool","optional":false}},{"name":"to","type":{"kind":"simple","type":"address","optional":false}},{"name":"value","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"mode","type":{"kind":"simple","type":"int","optional":false,"format":257}},{"name":"body","type":{"kind":"simple","type":"cell","optional":true}},{"name":"code","type":{"kind":"simple","type":"cell","optional":true}},{"name":"data","type":{"kind":"simple","type":"cell","optional":true}}]},
+    {"name":"Deploy","header":2490013878,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
+    {"name":"DeployOk","header":2952335191,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}}]},
+    {"name":"FactoryDeploy","header":1829761339,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"cashback","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"ChangeOwner","header":2174598809,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"ChangeOwnerOk","header":846932810,"fields":[{"name":"queryId","type":{"kind":"simple","type":"uint","optional":false,"format":64}},{"name":"newOwner","type":{"kind":"simple","type":"address","optional":false}}]},
+    {"name":"TryPayout","header":1620127519,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"value","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"PayoutOk","header":3641354770,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"value","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"PayoutFailed","header":633161870,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"value","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+    {"name":"BurnParameters","header":null,"fields":[{"name":"startAt","type":{"kind":"simple","type":"uint","optional":false,"format":32}},{"name":"endAt","type":{"kind":"simple","type":"uint","optional":false,"format":32}}]},
+    {"name":"EventPayoutCompleted","header":989312214,"fields":[{"name":"address","type":{"kind":"simple","type":"address","optional":false}},{"name":"value","type":{"kind":"simple","type":"uint","optional":false,"format":"coins"}}]},
+]
+
+const PayoutsMaster_getters: ABIGetter[] = [
+    {"name":"owner","arguments":[],"returnType":{"kind":"simple","type":"address","optional":false}},
+    {"name":"stopped","arguments":[],"returnType":{"kind":"simple","type":"bool","optional":false}},
+]
+
+const PayoutsMaster_receivers: ABIReceiver[] = [
+    {"receiver":"internal","message":{"kind":"text"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"PayoutOk"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"PayoutFailed"}},
+    {"receiver":"internal","message":{"kind":"text","text":"Deposit"}},
+    {"receiver":"internal","message":{"kind":"text","text":"Withdraw"}},
+    {"receiver":"internal","message":{"kind":"text","text":"Destroy"}},
+    {"receiver":"internal","message":{"kind":"typed","type":"Deploy"}},
+    {"receiver":"internal","message":{"kind":"text","text":"Resume"}},
+    {"receiver":"internal","message":{"kind":"text","text":"Stop"}},
+]
+
 export class PayoutsMaster implements Contract {
     
     static async init(owner: Address, publicKey: bigint, burn: BurnParameters | null) {
@@ -725,7 +761,10 @@ export class PayoutsMaster implements Contract {
     readonly address: Address; 
     readonly init?: { code: Cell, data: Cell };
     readonly abi: ContractABI = {
-        errors: PayoutsMaster_errors
+        types:  PayoutsMaster_types,
+        getters: PayoutsMaster_getters,
+        receivers: PayoutsMaster_receivers,
+        errors: PayoutsMaster_errors,
     };
     
     private constructor(address: Address, init?: { code: Cell, data: Cell }) {

@@ -32,12 +32,15 @@ describe("contract-storage", () => {
                     "$type": "received",
                     "message": {
                       "body": {
-                        "cell": "x{946A98B60000000000000000}",
-                        "type": "cell",
+                        "type": "known",
+                        "value": {
+                          "$$type": "Deploy",
+                          "queryId": 0n,
+                        },
                       },
                       "bounce": true,
                       "from": "@treasure(owner)",
-                      "to": "kQCT8ZSBRj6K35s0x3r7mnV66DQ1wWCwvPEWgm4zFkGRNFZ7",
+                      "to": "kQCmWrdeXc5R-7_o3DJSaPwn-Jqj3uGDturlVfY8KtTljwa1",
                       "type": "internal",
                       "value": "1",
                     },
@@ -51,11 +54,14 @@ describe("contract-storage", () => {
                     "messages": [
                       {
                         "body": {
-                          "cell": "x{AFF90F570000000000000000}",
-                          "type": "cell",
+                          "type": "known",
+                          "value": {
+                            "$$type": "DeployOk",
+                            "queryId": 0n,
+                          },
                         },
                         "bounce": false,
-                        "from": "kQCT8ZSBRj6K35s0x3r7mnV66DQ1wWCwvPEWgm4zFkGRNFZ7",
+                        "from": "kQCmWrdeXc5R-7_o3DJSaPwn-Jqj3uGDturlVfY8KtTljwa1",
                         "to": "@treasure(owner)",
                         "type": "internal",
                         "value": "0.88945",
@@ -97,8 +103,11 @@ describe("contract-storage", () => {
                     "$type": "received",
                     "message": {
                       "body": {
-                        "cell": "x{946A98B60000000000000000}",
-                        "type": "cell",
+                        "type": "known",
+                        "value": {
+                          "$$type": "Deploy",
+                          "queryId": 0n,
+                        },
                       },
                       "bounce": true,
                       "from": "@treasure(owner)",
@@ -116,8 +125,11 @@ describe("contract-storage", () => {
                     "messages": [
                       {
                         "body": {
-                          "cell": "x{AFF90F570000000000000000}",
-                          "type": "cell",
+                          "type": "known",
+                          "value": {
+                            "$$type": "DeployOk",
+                            "queryId": 0n,
+                          },
                         },
                         "bounce": false,
                         "from": "kQCmaGs9rbeuWxuGj4gkio5drY1lLOneE5hPO-kIxwJmofId",

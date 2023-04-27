@@ -118,12 +118,16 @@ describe("contract-payouts", () => {
                     "messages": [
                       {
                         "body": {
-                          "cell": "x{60912F1F8012B3B3A9D3FC4B5C62F80F98DD957DF46D5ADF361B39CA1BC6DA803B4BB6F36E0A2E90EDD001_}",
-                          "type": "cell",
+                          "type": "known",
+                          "value": {
+                            "$$type": "TryPayout",
+                            "address": kQCVnZ1On-Ja4xfAfMbsq--jatb5sNnOUN421AHaXbebcCWH,
+                            "value": 100000000000n,
+                          },
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
+                        "to": "kQCZtUnO-EhveVlJpU_YVCf3hYuz_VVR9ZTKyZ0A4WCyojws",
                         "type": "internal",
                         "value": "0.917541",
                       },
@@ -138,11 +142,15 @@ describe("contract-payouts", () => {
                     "$type": "received",
                     "message": {
                       "body": {
-                        "cell": "x{D90AAA128012B3B3A9D3FC4B5C62F80F98DD957DF46D5ADF361B39CA1BC6DA803B4BB6F36E0A2E90EDD001_}",
-                        "type": "cell",
+                        "type": "known",
+                        "value": {
+                          "$$type": "PayoutOk",
+                          "address": kQCVnZ1On-Ja4xfAfMbsq--jatb5sNnOUN421AHaXbebcCWH,
+                          "value": 100000000000n,
+                        },
                       },
                       "bounce": true,
-                      "from": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
+                      "from": "kQCZtUnO-EhveVlJpU_YVCf3hYuz_VVR9ZTKyZ0A4WCyojws",
                       "to": "@master",
                       "type": "internal",
                       "value": "0.804706",
@@ -150,7 +158,24 @@ describe("contract-payouts", () => {
                   },
                   {
                     "$type": "processed",
-                    "gasUsed": 14160n,
+                    "gasUsed": 16432n,
+                  },
+                  {
+                    "$type": "sent",
+                    "messages": [
+                      {
+                        "body": {
+                          "type": "known",
+                          "value": {
+                            "$$type": "EventPayoutCompleted",
+                            "address": kQCVnZ1On-Ja4xfAfMbsq--jatb5sNnOUN421AHaXbebcCWH,
+                            "value": 100000000000n,
+                          },
+                        },
+                        "to": null,
+                        "type": "external-out",
+                      },
+                    ],
                   },
                   {
                     "$type": "sent",
@@ -164,7 +189,7 @@ describe("contract-payouts", () => {
                         "from": "@master",
                         "to": "@treasure(non-owner)",
                         "type": "internal",
-                        "value": "100.78927",
+                        "value": "100.786998",
                       },
                     ],
                   },
@@ -208,12 +233,16 @@ describe("contract-payouts", () => {
                     "messages": [
                       {
                         "body": {
-                          "cell": "x{60912F1F8012B3B3A9D3FC4B5C62F80F98DD957DF46D5ADF361B39CA1BC6DA803B4BB6F36E0A2E90EDD001_}",
-                          "type": "cell",
+                          "type": "known",
+                          "value": {
+                            "$$type": "TryPayout",
+                            "address": kQCVnZ1On-Ja4xfAfMbsq--jatb5sNnOUN421AHaXbebcCWH,
+                            "value": 100000000000n,
+                          },
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
+                        "to": "kQCZtUnO-EhveVlJpU_YVCf3hYuz_VVR9ZTKyZ0A4WCyojws",
                         "type": "internal",
                         "value": "0.917541",
                       },
@@ -228,11 +257,15 @@ describe("contract-payouts", () => {
                     "$type": "received",
                     "message": {
                       "body": {
-                        "cell": "x{25BD488E8012B3B3A9D3FC4B5C62F80F98DD957DF46D5ADF361B39CA1BC6DA803B4BB6F36E0A2E90EDD001_}",
-                        "type": "cell",
+                        "type": "known",
+                        "value": {
+                          "$$type": "PayoutFailed",
+                          "address": kQCVnZ1On-Ja4xfAfMbsq--jatb5sNnOUN421AHaXbebcCWH,
+                          "value": 100000000000n,
+                        },
                       },
                       "bounce": false,
-                      "from": "kQCs3SKsnoYEsiI-lboLs597Jqlj65MMIYeZUlz4DMzPIYPF",
+                      "from": "kQCZtUnO-EhveVlJpU_YVCf3hYuz_VVR9ZTKyZ0A4WCyojws",
                       "to": "@master",
                       "type": "internal",
                       "value": "0.905232993",

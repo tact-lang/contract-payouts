@@ -37,8 +37,11 @@ describe("contract-deposits", () => {
                     "$type": "received",
                     "message": {
                       "body": {
-                        "cell": "x{946A98B60000000000000000}",
-                        "type": "cell",
+                        "type": "known",
+                        "value": {
+                          "$$type": "Deploy",
+                          "queryId": 0n,
+                        },
                       },
                       "bounce": true,
                       "from": "@treasure(owner)",
@@ -56,8 +59,11 @@ describe("contract-deposits", () => {
                     "messages": [
                       {
                         "body": {
-                          "cell": "x{AFF90F570000000000000000}",
-                          "type": "cell",
+                          "type": "known",
+                          "value": {
+                            "$$type": "DeployOk",
+                            "queryId": 0n,
+                          },
                         },
                         "bounce": false,
                         "from": "@master",
@@ -200,7 +206,7 @@ describe("contract-deposits", () => {
             ]
         `);
 
-        // Should fail to widthdraw
+        // Should fail for non-owner
         await contract.send(nonOwner, { value: toNano("0.5") }, "Deposit");
         await system.run();
         expect(await contract.getOwner()).toMatchInlineSnapshot(`kQAI-3FJVc_ywSuY4vq0bYrzR7S4Och4y7bTU_i5yLOB3A6P`);
