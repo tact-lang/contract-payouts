@@ -72,7 +72,7 @@
         var ($burn'startAt, $burn'endAt) = $BurnParameters$_not_null($self'burn);
         int $now = now();
         if (($burn'endAt <= $now)) {
-            ($self'owner, $self'publicKey, $self'stopped, $self'burn)~$PayoutsMaster$_fun_reply(__gen_cell_comment_6be22126f3f2d13888fdf30eb7bcf29b2555e01b1452a5e5e2088a0f41f4da7d());
+            ($self'owner, $self'publicKey, $self'stopped, $self'burn)~$PayoutsMaster$_fun_reply(__gen_cell_comment_d1fc74c13be089b6bea8cf835da140f1b590ac5f89c5040f9ddfc30f5dd5e70d());
             return (($self'owner, $self'publicKey, $self'stopped, $self'burn), ());
         }
         if (($now >= $burn'startAt)) {
@@ -118,14 +118,15 @@
 ((slice, int, int, tuple), ()) $PayoutsMaster$_internal_text_250b76e2b9576fc6b4c45129483006b0003a0c39b6f7ae413d177f4e3479dbca((slice, int, int, tuple) $self) impure inline {
     var ($self'owner, $self'publicKey, $self'stopped, $self'burn) = $self;
     ($self'owner, $self'publicKey, $self'stopped, $self'burn)~$PayoutsMaster$_fun_requireOwner();
-    $global_send($SendParameters$_constructor_value_mode_to_bounce_body(100000000, 2, $self'owner, false, __gen_cell_comment_f7b1ab6077945b37370a1550574675180cf87df4cb047c869746812a83667d4c()));
+    raw_reserve(100000000, 0);
+    $global_send($SendParameters$_constructor_value_mode_to_bounce_body(0, 128, $self'owner, false, __gen_cell_comment_f7b1ab6077945b37370a1550574675180cf87df4cb047c869746812a83667d4c()));
     return (($self'owner, $self'publicKey, $self'stopped, $self'burn), ());
 }
 
 ((slice, int, int, tuple), ()) $PayoutsMaster$_internal_text_986c2ba124bb9287eb4a0bd8d3104e1c0067a3c93952d889c74d08185bd30d4d((slice, int, int, tuple) $self) impure inline {
     var ($self'owner, $self'publicKey, $self'stopped, $self'burn) = $self;
     ($self'owner, $self'publicKey, $self'stopped, $self'burn)~$PayoutsMaster$_fun_requireOwner();
-    $global_send($SendParameters$_constructor_value_mode_to_bounce_body(0, (128 + 32), $self'owner, false, __gen_cell_comment_13c8d1a083e5ccb8cf7681be11c1ed303c4a19cb0110663a87e8c3fc525c2879()));
+    $global_send($SendParameters$_constructor_value_mode_to_bounce_body(0, (128 + 32), $self'owner, false, __gen_cell_comment_d0eb08c41bdebaa57d4264bc1d1a8ce09adbf409ec16ee54951457d71e3e04e9()));
     return (($self'owner, $self'publicKey, $self'stopped, $self'burn), ());
 }
 

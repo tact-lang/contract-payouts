@@ -1,16 +1,18 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Address, contractAddress } from "ton";
-import { SampleTactContract } from "./output/sample_SampleTactContract";
+import { BurnParameters, PayoutsMaster } from "./output/payouts_PayoutsMaster";
 import { prepareTactDeployment } from "@tact-lang/deployer";
 
 (async () => {
 
     // Parameters
     let testnet = true;
-    let packageName = 'sample_SampleTactContract.pkg';
+    let packageName = 'payouts_PayoutsMaster.pkg';
     let owner = Address.parse('kQBM7QssP28PhrctDOyd47_zpFfDiQvv5V9iXizNopb1d2LB');
-    let init = await SampleTactContract.init(owner);
+    let publicKey = 0n; // Put here your public key
+    let burnParameters: BurnParameters | null = null;
+    let init = await PayoutsMaster.init(owner, publicKey, burnParameters);
 
     // Load required data
     let address = contractAddress(0, init);

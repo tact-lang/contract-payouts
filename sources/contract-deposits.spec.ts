@@ -1,4 +1,4 @@
-import { beginCell, toNano } from "ton";
+import { beginCell, fromNano, toNano } from "ton";
 import { ContractSystem, testKey } from "@tact-lang/emulator";
 import { PayoutsMaster } from "./output/payouts_PayoutsMaster";
 
@@ -205,17 +205,32 @@ describe("contract-deposits", () => {
               },
             ]
         `);
+    });
 
-        // Should fail for non-owner
-        await contract.send(nonOwner, { value: toNano("0.5") }, "Deposit");
+    it("should allow withdraw for owner", async () => {
+        // Create keyparis
+        let keypair = testKey("keypair-test");
+        let publicKey = beginCell().storeBuffer(keypair.publicKey).endCell().beginParse().loadUintBig(256);
+
+        // Create contract system
+        let system = await ContractSystem.create();
+        let owner = system.treasure("owner");
+        expect(owner.address).toMatchInlineSnapshot(`kQAI-3FJVc_ywSuY4vq0bYrzR7S4Och4y7bTU_i5yLOB3A6P`);
+        let nonOwner = system.treasure("non-owner");
+        let contract = system.open(await PayoutsMaster.fromInit(owner.address, publicKey, null));
+        system.name(contract, "master");
+        await contract.send(owner, { value: toNano(1) }, { $$type: "Deploy", queryId: 0n });
+        await contract.send(owner, { value: toNano(100000) }, "Deposit");
         await system.run();
-        expect(await contract.getOwner()).toMatchInlineSnapshot(`kQAI-3FJVc_ywSuY4vq0bYrzR7S4Och4y7bTU_i5yLOB3A6P`);
-        expect(await contract.getStopped()).toMatchInlineSnapshot(`false`);
-        expect(system.contract(contract).balance).toMatchInlineSnapshot(`199999883127966n`);
+
+        // Withdraw by non-owner must fail
+        let track = system.track(contract.address);
+        await contract.send(nonOwner, { value: toNano("0.5") }, "Withdraw");
+        await system.run();
         expect(track.collect()).toMatchInlineSnapshot(`
             [
               {
-                "$seq": 4,
+                "$seq": 2,
                 "events": [
                   {
                     "$type": "storage-charged",
@@ -225,7 +240,7 @@ describe("contract-deposits", () => {
                     "$type": "received",
                     "message": {
                       "body": {
-                        "text": "Deposit",
+                        "text": "Withdraw",
                         "type": "text",
                       },
                       "bounce": true,
@@ -237,22 +252,196 @@ describe("contract-deposits", () => {
                   },
                   {
                     "$type": "failed",
-                    "errorCode": 16059,
-                    "errorMessage": "Invalid value",
+                    "errorCode": 132,
+                    "errorMessage": "Access denied",
                   },
                   {
                     "$type": "sent-bounced",
                     "message": {
                       "body": {
-                        "cell": "x{FFFFFFFF000000004465706F736974}",
+                        "cell": "x{FFFFFFFF000000005769746864726177}",
                         "type": "cell",
                       },
                       "bounce": false,
                       "from": "@master",
                       "to": "@treasure(non-owner)",
                       "type": "internal",
-                      "value": "0.494863",
+                      "value": "0.494651",
                     },
+                  },
+                ],
+              },
+            ]
+        `);
+
+        // Withdraw by owner must succeed
+        await contract.send(owner, { value: toNano("0.5") }, "Withdraw");
+        await system.run();
+        expect(track.collect()).toMatchInlineSnapshot(`
+            [
+              {
+                "$seq": 3,
+                "events": [
+                  {
+                    "$type": "storage-charged",
+                    "amount": "0.000000017",
+                  },
+                  {
+                    "$type": "received",
+                    "message": {
+                      "body": {
+                        "text": "Withdraw",
+                        "type": "text",
+                      },
+                      "bounce": true,
+                      "from": "@treasure(owner)",
+                      "to": "@master",
+                      "type": "internal",
+                      "value": "0.5",
+                    },
+                  },
+                  {
+                    "$type": "processed",
+                    "gasUsed": 9207n,
+                  },
+                  {
+                    "$type": "sent",
+                    "messages": [
+                      {
+                        "body": {
+                          "text": "Withdraw completed",
+                          "type": "text",
+                        },
+                        "bounce": false,
+                        "from": "@master",
+                        "to": "@treasure(owner)",
+                        "type": "internal",
+                        "value": "100000.381080966",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]
+        `);
+
+        // Check balance
+        expect(system.contract(contract).state.state.type).toMatchInlineSnapshot(`"active"`);
+        expect(fromNano(system.contract(contract).balance)).toMatchInlineSnapshot(`"0.1"`);
+    });
+
+    it("should allow destroy for owner", async () => {
+        // Create keyparis
+        let keypair = testKey("keypair-test");
+        let publicKey = beginCell().storeBuffer(keypair.publicKey).endCell().beginParse().loadUintBig(256);
+
+        // Create contract system
+        let system = await ContractSystem.create();
+        let owner = system.treasure("owner");
+        expect(owner.address).toMatchInlineSnapshot(`kQAI-3FJVc_ywSuY4vq0bYrzR7S4Och4y7bTU_i5yLOB3A6P`);
+        let nonOwner = system.treasure("non-owner");
+        let contract = system.open(await PayoutsMaster.fromInit(owner.address, publicKey, null));
+        system.name(contract, "master");
+        await contract.send(owner, { value: toNano(1) }, { $$type: "Deploy", queryId: 0n });
+        await contract.send(owner, { value: toNano(100000) }, "Deposit");
+        await system.run();
+
+        // Destroy by non-owner must fail
+        let track = system.track(contract.address);
+        await contract.send(nonOwner, { value: toNano("0.5") }, "Destroy");
+        await system.run();
+        expect(track.collect()).toMatchInlineSnapshot(`
+            [
+              {
+                "$seq": 2,
+                "events": [
+                  {
+                    "$type": "storage-charged",
+                    "amount": "0.000000017",
+                  },
+                  {
+                    "$type": "received",
+                    "message": {
+                      "body": {
+                        "text": "Destroy",
+                        "type": "text",
+                      },
+                      "bounce": true,
+                      "from": "@treasure(non-owner)",
+                      "to": "@master",
+                      "type": "internal",
+                      "value": "0.5",
+                    },
+                  },
+                  {
+                    "$type": "failed",
+                    "errorCode": 132,
+                    "errorMessage": "Access denied",
+                  },
+                  {
+                    "$type": "sent-bounced",
+                    "message": {
+                      "body": {
+                        "cell": "x{FFFFFFFF0000000044657374726F79}",
+                        "type": "cell",
+                      },
+                      "bounce": false,
+                      "from": "@master",
+                      "to": "@treasure(non-owner)",
+                      "type": "internal",
+                      "value": "0.494538",
+                    },
+                  },
+                ],
+              },
+            ]
+        `);
+
+        // Destroy by owner must succeed
+        await contract.send(owner, { value: toNano("0.5") }, "Destroy");
+        await system.run();
+        expect(track.collect()).toMatchInlineSnapshot(`
+            [
+              {
+                "$seq": 3,
+                "events": [
+                  {
+                    "$type": "storage-charged",
+                    "amount": "0.000000017",
+                  },
+                  {
+                    "$type": "received",
+                    "message": {
+                      "body": {
+                        "text": "Destroy",
+                        "type": "text",
+                      },
+                      "bounce": true,
+                      "from": "@treasure(owner)",
+                      "to": "@master",
+                      "type": "internal",
+                      "value": "0.5",
+                    },
+                  },
+                  {
+                    "$type": "processed",
+                    "gasUsed": 8761n,
+                  },
+                  {
+                    "$type": "sent",
+                    "messages": [
+                      {
+                        "body": {
+                          "text": "Contract destroyed",
+                          "type": "text",
+                        },
+                        "bounce": false,
+                        "from": "@master",
+                        "to": "@treasure(owner)",
+                        "type": "internal",
+                        "value": "100000.481526966",
+                      },
+                    ],
                   },
                 ],
               },

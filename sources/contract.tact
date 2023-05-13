@@ -123,7 +123,7 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
             let burn: BurnParameters = self.burn!!;
             let now: Int = now();
             if (burn.endAt <= now) {
-                self.reply("Payout completed".asComment());
+                self.reply("Payout already ended".asComment());
                 return;
             }
             if (now >= burn.startAt) {
@@ -193,9 +193,10 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
 
     receive("Withdraw") {
         self.requireOwner();
+        nativeReserve(self.storageReserve, 0);
         send(SendParameters{
-            value: ton("0.1"), 
-            mode: SendIgnoreErrors,
+            value: 0, 
+            mode: SendRemainingBalance,
             to: self.owner, 
             bounce: false,
             body: "Withdraw completed".asComment()
@@ -209,7 +210,7 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
             mode: SendRemainingBalance + SendDestroyIfZero,
             to: self.owner, 
             bounce: false,
-            body: "Deposit received".asComment()
+            body: "Contract destroyed".asComment()
         });
     }
 }
