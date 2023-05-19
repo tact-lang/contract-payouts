@@ -93,6 +93,15 @@ tuple $BurnParameters$_as_optional((int, int) v) inline;
 ;; $StateInit$_as_optional
 tuple $StateInit$_as_optional((cell, cell) v) inline;
 
+;; $BurnParameters$_to_tuple
+tuple $BurnParameters$_to_tuple(((int, int)) v) inline;
+
+;; $BurnParameters$_to_opt_tuple
+tuple $BurnParameters$_to_opt_tuple(tuple v) inline;
+
+;; $BurnParameters$_to_opt_external
+tuple $BurnParameters$_to_opt_external(tuple v) inline;
+
 ;; $PayoutBeacon$init$_store
 builder $PayoutBeacon$init$_store(builder build_0, (slice, slice) v) inline;
 
@@ -131,6 +140,12 @@ slice $String$_fun_fromBase64(slice $self) impure inline;
 
 ;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
 ((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
+
+;; $PayoutsMaster$_fun_publicKey
+((slice, int, int, tuple), int) $PayoutsMaster$_fun_publicKey((slice, int, int, tuple) $self) impure inline_ref;
+
+;; $PayoutsMaster$_fun_burn
+((slice, int, int, tuple), tuple) $PayoutsMaster$_fun_burn((slice, int, int, tuple) $self) impure inline_ref;
 
 ;; $PayoutsMaster$_fun_forward
 ((slice, int, int, tuple), ()) $PayoutsMaster$_fun_forward((slice, int, int, tuple) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;

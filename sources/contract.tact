@@ -131,6 +131,9 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
             }
         }
 
+        // Check min value
+        require(value >= ton("1.0"), "Check withdraw min value");
+
         // Check balance before sending forward to save some gas on depletion
         require(myBalance() > ton("1.0") + self.storageReserve + value, "Insufficient balance on master");
 
@@ -161,7 +164,7 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
             value: ok.value, 
             mode: SendRemainingValue,
             to: ok.address, 
-            body: "Withdraw Completed".asComment()
+            body: "Payout сompleted".asComment()
         });
     }
 
@@ -170,7 +173,7 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
             value: failed.value, 
             mode: SendRemainingValue,
             to: failed.address, 
-            body: "Already withdrawn".asComment()
+            body: "Already paid".asComment()
         });
     }
 
@@ -213,4 +216,14 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
             body: "Contract destroyed".asComment()
         });
     }
+
+    // Getters
+
+    get fun publicKey(): Int {
+        return self.publicKey;
+    }
+
+    get fun burn(): BurnParameters? {
+        return self.burn;
+    } 
 }

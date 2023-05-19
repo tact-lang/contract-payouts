@@ -166,7 +166,7 @@ describe("contract-deposits", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.000000017",
+                    "amount": "0.000000018",
                   },
                   {
                     "$type": "received",
@@ -234,7 +234,7 @@ describe("contract-deposits", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.000000017",
+                    "amount": "0.000000018",
                   },
                   {
                     "$type": "received",
@@ -284,7 +284,7 @@ describe("contract-deposits", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.000000017",
+                    "amount": "0.000000018",
                   },
                   {
                     "$type": "received",
@@ -316,7 +316,7 @@ describe("contract-deposits", () => {
                         "from": "@master",
                         "to": "@treasure(owner)",
                         "type": "internal",
-                        "value": "100000.381080966",
+                        "value": "100000.381080964",
                       },
                     ],
                   },
@@ -357,7 +357,7 @@ describe("contract-deposits", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.000000017",
+                    "amount": "0.000000018",
                   },
                   {
                     "$type": "received",
@@ -407,7 +407,7 @@ describe("contract-deposits", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.000000017",
+                    "amount": "0.000000018",
                   },
                   {
                     "$type": "received",
@@ -439,7 +439,7 @@ describe("contract-deposits", () => {
                         "from": "@master",
                         "to": "@treasure(owner)",
                         "type": "internal",
-                        "value": "100000.481526966",
+                        "value": "100000.481526964",
                       },
                     ],
                   },

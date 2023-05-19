@@ -29,6 +29,9 @@ PROGRAM{
   DECLPROC $PayoutsMaster$_load
   DECLPROC $StateInit$_not_null
   DECLPROC $StateInit$_as_optional
+  DECLPROC $BurnParameters$_to_tuple
+  DECLPROC $BurnParameters$_to_opt_tuple
+  DECLPROC $BurnParameters$_to_opt_external
   DECLPROC $PayoutBeacon$init$_store
   DECLPROC $PayoutsMaster$init$_load
   DECLPROC $PayoutsMaster$_contract_init
@@ -42,6 +45,8 @@ PROGRAM{
   DECLPROC $String$_fun_fromBase64
   DECLPROC $PayoutBeacon$_init_child
   DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
+  DECLPROC $PayoutsMaster$_fun_publicKey
+  DECLPROC $PayoutsMaster$_fun_burn
   DECLPROC $PayoutsMaster$_fun_forward
   DECLPROC $PayoutsMaster$_fun_reply
   DECLPROC $PayoutsMaster$_fun_notify
@@ -64,6 +69,8 @@ PROGRAM{
   DECLPROC $PayoutsMaster$_internal_binary_Deploy
   DECLPROC $PayoutsMaster$_internal_text_6c8f44f45fedb4cdfed4de8db14aa5b13ad55d430f759d0669210b74c48fe3df
   DECLPROC $PayoutsMaster$_internal_text_bcfaf776907c719cc8d379d8f194aaaa27e8ca2871cd591781721f215a454501
+  86520 DECLMETHOD %publicKey
+  91153 DECLMETHOD %burn
   83229 DECLMETHOD %owner
   74107 DECLMETHOD %stopped
   113617 DECLMETHOD supported_interfaces
@@ -306,6 +313,30 @@ PROGRAM{
   }>
   $StateInit$_as_optional PROCINLINE:<{
     2 TUPLE
+  }>
+  $BurnParameters$_to_tuple PROCINLINE:<{
+    2 TUPLE
+  }>
+  $BurnParameters$_to_opt_tuple PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+      $BurnParameters$_not_null INLINECALLDICT
+      $BurnParameters$_to_tuple INLINECALLDICT
+    }>
+  }>
+  $BurnParameters$_to_opt_external PROCINLINE:<{
+    $BurnParameters$_to_opt_tuple INLINECALLDICT
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+    }>
   }>
   $PayoutBeacon$init$_store PROCINLINE:<{
     -ROT
@@ -644,6 +675,12 @@ PROGRAM{
   }>
   $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
   }>
+  $PayoutsMaster$_fun_publicKey PROCREF:<{
+    s2 PUSH
+  }>
+  $PayoutsMaster$_fun_burn PROCREF:<{
+    DUP
+  }>
   $PayoutsMaster$_fun_forward PROCREF:<{
     PUSHNULL
     PUSHNULL
@@ -807,6 +844,11 @@ PROGRAM{
           3 BLKDROP
         }>
       }>
+      57826 PUSHINT
+      OVER
+      1000000000 PUSHINT
+      GEQ
+      THROWANYIFNOT
       19204 PUSHINT
       __tact_my_balance INLINECALLDICT
       1100000000 PUSHINT
@@ -863,7 +905,7 @@ PROGRAM{
     $EventPayoutCompleted$_store_cell INLINECALLDICT
     $global_emit INLINECALLDICT
     64 PUSHINT
-    B{b5ee9c7241010101001800002c00000000576974686472617720436f6d706c65746564a728c7d2} B>boc PUSHREF
+    B{b5ee9c7241010101001700002a000000005061796f757420d1816f6d706c6574656480785295} B>boc PUSHREF
     s3 s6 XCHG
     s1 s7 s0 XCHG3
     $SendParameters$_constructor_value_mode_to_body INLINECALLDICT
@@ -872,7 +914,7 @@ PROGRAM{
   }>
   $PayoutsMaster$_internal_binary_PayoutFailed PROCINLINE:<{
     64 PUSHINT
-    B{b5ee9c7241010101001700002a00000000416c72656164792077697468647261776ee8b1aaae} B>boc PUSHREF
+    B{b5ee9c7241010101001200002000000000416c72656164792070616964feced6d9} B>boc PUSHREF
     s1 s3 s0 XCHG3
     $SendParameters$_constructor_value_mode_to_body INLINECALLDICT
     $global_send INLINECALLDICT
@@ -943,6 +985,17 @@ PROGRAM{
     s1 s2 XCHG
     $PayoutsMaster$_fun_reply INLINECALLDICT
   }>
+  %publicKey PROC:<{
+    $PayoutsMaster$_contract_load INLINECALLDICT
+    $PayoutsMaster$_fun_publicKey INLINECALLDICT
+    4 1 BLKDROP2
+  }>
+  %burn PROC:<{
+    $PayoutsMaster$_contract_load INLINECALLDICT
+    $PayoutsMaster$_fun_burn INLINECALLDICT
+    4 1 BLKDROP2
+    $BurnParameters$_to_opt_external INLINECALLDICT
+  }>
   %owner PROC:<{
     $PayoutsMaster$_contract_load INLINECALLDICT
     $PayoutsMaster$_fun_owner INLINECALLDICT
@@ -963,7 +1016,7 @@ PROGRAM{
     192989407141549587419771644724066226057 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d634e736a6f4d654c415a5769514671596d4a6e4e38355874366d3177683758374148466d634336624d467758} PUSHSLICE
+    x{697066733a2f2f516d575379695257784c454b377a46685569534455366e70576562444a3970594e7178534a656f4131314d764a67} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

@@ -141,6 +141,25 @@ tuple $BurnParameters$_as_optional((int, int) v) inline {
     return __tact_tuple_create_2(v'startAt, v'endAt);
 }
 
+tuple $BurnParameters$_to_tuple(((int, int)) v) inline {
+    var (v'startAt, v'endAt) = v;
+    return __tact_tuple_create_2(v'startAt, v'endAt);
+}
+
+tuple $BurnParameters$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $BurnParameters$_to_tuple($BurnParameters$_not_null(v)); 
+}
+
+tuple $BurnParameters$_to_opt_external(tuple v) inline {
+    var loaded = $BurnParameters$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
 ;;
 ;; Type: EventPayoutCompleted
 ;; Header: 0x3af7b4d6

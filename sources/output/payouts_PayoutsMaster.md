@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: PayoutsMaster
-BOC Size: 2465 bytes
+BOC Size: 2537 bytes
 
 # Types
 Total Types: 13
@@ -58,7 +58,11 @@ TLB: `event_payout_completed#3af7b4d6 address:address value:coins = EventPayoutC
 Signature: `EventPayoutCompleted{address:address,value:coins}`
 
 # Get Methods
-Total Get Methods: 2
+Total Get Methods: 4
+
+## publicKey
+
+## burn
 
 ## owner
 
@@ -96,3 +100,4 @@ Total Get Methods: 2
 40368: Contract stopped
 48401: Invalid signature
 53296: Contract not stopped
+57826: Check withdraw min value

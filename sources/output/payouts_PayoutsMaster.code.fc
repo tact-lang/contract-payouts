@@ -25,6 +25,16 @@
     return ($self'owner, $self'publicKey, $self'stopped, $self'burn);
 }
 
+((slice, int, int, tuple), int) $PayoutsMaster$_fun_publicKey((slice, int, int, tuple) $self) impure inline_ref {
+    var (($self'owner, $self'publicKey, $self'stopped, $self'burn)) = $self;
+    return (($self'owner, $self'publicKey, $self'stopped, $self'burn), $self'publicKey);
+}
+
+((slice, int, int, tuple), tuple) $PayoutsMaster$_fun_burn((slice, int, int, tuple) $self) impure inline_ref {
+    var (($self'owner, $self'publicKey, $self'stopped, $self'burn)) = $self;
+    return (($self'owner, $self'publicKey, $self'stopped, $self'burn), $self'burn);
+}
+
 ((slice, int, int, tuple), ()) $PayoutsMaster$_fun_requireOwner((slice, int, int, tuple) $self) impure inline_ref {
     var (($self'owner, $self'publicKey, $self'stopped, $self'burn)) = $self;
     throw_unless(132, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
@@ -79,6 +89,7 @@
             $value = (($value * ($burn'endAt - $now)) / ($burn'endAt - $burn'startAt));
         }
     }
+    throw_unless(57826, ($value >= 1000000000));
     throw_unless(19204, (__tact_my_balance() > ((1000000000 + 100000000) + $value)));
     var ($init'code, $init'data) = $PayoutBeacon$_init_child(__tact_context_sys, $ctx'sender, my_address());
     slice $address = $global_contractAddress(($init'code, $init'data));
@@ -96,14 +107,14 @@
     throw_unless(4429, ( __tact_slice_eq_bits($beaconAddress, $ctx'sender) ));
     throw_unless(19204, (__tact_my_balance() > ((1000000000 + 100000000) + $ok'value)));
     $global_emit($EventPayoutCompleted$_store_cell($EventPayoutCompleted$_constructor_address_value($ok'address, $ok'value)));
-    $global_send($SendParameters$_constructor_value_mode_to_body($ok'value, 64, $ok'address, __gen_cell_comment_cd1c8b4d5ebc37bffe62aa6938fac543df703846f4965df7d826babb5998a6cf()));
+    $global_send($SendParameters$_constructor_value_mode_to_body($ok'value, 64, $ok'address, __gen_cell_comment_09ca5c59d7594cc794635e7b267be70795937c6d0366ed0164c412595b6eec6e()));
     return (($self'owner, $self'publicKey, $self'stopped, $self'burn), ());
 }
 
 (((slice, int, int, tuple)), ()) $PayoutsMaster$_internal_binary_PayoutFailed((slice, int, int, tuple) $self, (slice, int) $failed) impure inline {
     var ($self'owner, $self'publicKey, $self'stopped, $self'burn) = $self;
     var ($failed'address, $failed'value) = $failed;
-    $global_send($SendParameters$_constructor_value_mode_to_body($failed'value, 64, $failed'address, __gen_cell_comment_ca2e2e41ec6856c7bbd899bcfd500eb117c5f32a29330cf418e4ca98056f4a72()));
+    $global_send($SendParameters$_constructor_value_mode_to_body($failed'value, 64, $failed'address, __gen_cell_comment_51a60a895442bd331fe75161305b2afbe04d33f1cd6cf8a1649e028f992eb33c()));
     return (($self'owner, $self'publicKey, $self'stopped, $self'burn), ());
 }
 
@@ -159,6 +170,18 @@
 ;; Get methods of a Contract PayoutsMaster
 ;;
 
+_ %publicKey() method_id(86520) {
+    var self = $PayoutsMaster$_contract_load();
+    var res = self~$PayoutsMaster$_fun_publicKey();
+    return res;
+}
+
+_ %burn() method_id(91153) {
+    var self = $PayoutsMaster$_contract_load();
+    var res = self~$PayoutsMaster$_fun_burn();
+    return $BurnParameters$_to_opt_external(res);
+}
+
 _ %owner() method_id(83229) {
     var self = $PayoutsMaster$_contract_load();
     var res = self~$PayoutsMaster$_fun_owner();
@@ -184,7 +207,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmcNsjoMeLAZWiQFqYmJnN85Xt6m1wh7X7AHFmcC6bMFwX";
+    return "ipfs://QmWSyiRWxLEK7zFhUiSDU6npWebDJ9pYNqxSJeoA11MvJg";
 }
 
 _ lazy_deployment_completed() method_id {
