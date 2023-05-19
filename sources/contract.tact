@@ -170,7 +170,7 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
 
     receive(failed: PayoutFailed) {
         send(SendParameters{
-            value: failed.value, 
+            value: 0, 
             mode: SendRemainingValue,
             to: failed.address, 
             body: "Already paid".asComment()

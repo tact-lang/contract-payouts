@@ -114,7 +114,7 @@
 (((slice, int, int, tuple)), ()) $PayoutsMaster$_internal_binary_PayoutFailed((slice, int, int, tuple) $self, (slice, int) $failed) impure inline {
     var ($self'owner, $self'publicKey, $self'stopped, $self'burn) = $self;
     var ($failed'address, $failed'value) = $failed;
-    $global_send($SendParameters$_constructor_value_mode_to_body($failed'value, 64, $failed'address, __gen_cell_comment_51a60a895442bd331fe75161305b2afbe04d33f1cd6cf8a1649e028f992eb33c()));
+    $global_send($SendParameters$_constructor_value_mode_to_body(0, 64, $failed'address, __gen_cell_comment_51a60a895442bd331fe75161305b2afbe04d33f1cd6cf8a1649e028f992eb33c()));
     return (($self'owner, $self'publicKey, $self'stopped, $self'burn), ());
 }
 

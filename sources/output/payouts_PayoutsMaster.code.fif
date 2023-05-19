@@ -913,6 +913,8 @@ PROGRAM{
     s0 s0 s3 XCHG3
   }>
   $PayoutsMaster$_internal_binary_PayoutFailed PROCINLINE:<{
+    DROP
+    0 PUSHINT
     64 PUSHINT
     B{b5ee9c7241010101001200002000000000416c72656164792070616964feced6d9} B>boc PUSHREF
     s1 s3 s0 XCHG3
