@@ -129,6 +129,9 @@ slice $global_contractAddress((cell, cell) $s) impure inline;
 ;; $Builder$_fun_asSlice
 slice $Builder$_fun_asSlice(builder $self) impure inline;
 
+;; $global_normalizeKey
+slice $global_normalizeKey(slice $src) impure inline_ref;
+
 ;; $Slice$_fun_fromBase64
 slice $Slice$_fun_fromBase64(slice $self) impure inline_ref;
 

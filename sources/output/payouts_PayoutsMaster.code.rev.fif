@@ -10,8 +10,8 @@ PROGRAM{
   DECLPROC ?fun_ref_00e873b937eb34cc;
   DECLPROC ?fun_ref_0e447c6ae95ddfd1;
   DECLPROC ?fun_ref_10c319ce0484d846;
+  DECLPROC ?fun_ref_3267c62833cfdfd0;
   DECLPROC ?fun_ref_40d98146a47dbe3b;
-  DECLPROC ?fun_ref_427e66f1c63ebaf1;
   DECLPROC ?fun_ref_44086a5ce86162fe;
   DECLPROC ?fun_ref_4d5bc93e9fe6a602;
   DECLPROC ?fun_ref_57d57005f0f842c1;
@@ -21,6 +21,7 @@ PROGRAM{
   DECLPROC ?fun_ref_7d7b7a07ccd0560c;
   DECLPROC ?fun_ref_9c6d134f96a50c9f;
   DECLPROC ?fun_ref_9c953530be7414a6;
+  DECLPROC ?fun_ref_ac9eadb91a2df668;
   DECLPROC ?fun_ref_b2f99ae1a1dd4dfb;
   DECLPROC ?fun_ref_b93b9862cda1783c;
   DECLPROC ?fun_ref_feaf66487ec4508a;
@@ -57,7 +58,7 @@ PROGRAM{
     2 SETGLOBVAR
     ?fun_ref_6b845308725f635f INLINECALLDICT
     2 4 BLKSWAP
-    ?fun_ref_427e66f1c63ebaf1 INLINECALLDICT
+    ?fun_ref_3267c62833cfdfd0 INLINECALLDICT
     130 THROWIFNOT
     NEWC
     3 GETGLOBVAR
@@ -168,7 +169,7 @@ PROGRAM{
     s0 s1 XCHG
   }>
   get_abi_ipfs PROC:<{
-    x{697066733A2F2F516D575379695257784C454B377A46685569534455366E70576562444A3970594E7178534A656F4131314D764A6782_} PUSHSLICE
+    x{697066733A2F2F516D5470645343786E6245624D4A73744E7069666E6542745438394658484D646F4577424A32533139717A64506282_} PUSHSLICE
   }>
   ?fun_ref_00e873b937eb34cc PROCREF:<{
     4 2 BLKSWAP
@@ -333,10 +334,7 @@ PROGRAM{
   ?fun_ref_10c319ce0484d846 PROCREF:<{
     s3 PUSH
   }>
-  ?fun_ref_40d98146a47dbe3b PROCREF:<{
-    s0 PUSH
-  }>
-  ?fun_ref_427e66f1c63ebaf1 PROCREF:<{
+  ?fun_ref_3267c62833cfdfd0 PROCREF:<{
     2 SAVE
     SAMEALTSAVE
     s0 s1 XCHG
@@ -567,6 +565,7 @@ PROGRAM{
         <{
           2 SAVE
           SAMEALTSAVE
+          ?fun_ref_ac9eadb91a2df668 INLINECALLDICT
           4 1 BLKSWAP
           ?fun_ref_60315714228ede95 INLINECALLDICT
           1 GETGLOBVAR
@@ -651,7 +650,8 @@ PROGRAM{
               3 BLKDROP
             }> PUSHCONT
             IFELSE
-          }> IFREF
+          }> PUSHCONT
+          IF
           57826 PUSHINT
           s1 PUSH
           1000000000 PUSHINT
@@ -757,6 +757,9 @@ PROGRAM{
       s0 POP
     }> IFREFELSE
     0 PUSHINT
+  }>
+  ?fun_ref_40d98146a47dbe3b PROCREF:<{
+    s0 PUSH
   }>
   ?fun_ref_44086a5ce86162fe PROCREF:<{
     s1 PUSH
@@ -1099,6 +1102,77 @@ PROGRAM{
     53296 PUSHINT
     s2 PUSH
     THROWANYIFNOT
+  }>
+  ?fun_ref_ac9eadb91a2df668 PROCREF:<{
+    NEWC
+    s0 s1 XCHG
+    <{
+      s0 PUSH
+      SBITS
+      0 GTINT
+      <{
+        -1 PUSHINT
+      }> PUSHCONT
+      <{
+        s0 PUSH
+        SREFS
+        0 GTINT
+      }> PUSHCONT
+      IFELSE
+    }> PUSHCONT
+    <{
+      46762 PUSHINT
+      s1 PUSH
+      SBITS
+      false 1 true 2 0 DIV
+      s0 s2 XCHG
+      0 EQINT
+      <{
+        s1 PUSH
+        SREFS
+        2 LESSINT
+      }> PUSHCONT
+      <{
+        0 PUSHINT
+      }> PUSHCONT
+      IFELSE
+      THROWANYIFNOT
+      s0 PUSH
+      SBITS
+      0 GTINT
+      <{
+        8 LDU
+        s1 PUSH
+        32 GTINT
+        <{
+          s1 PUSH
+          127 LESSINT
+        }> PUSHCONT
+        <{
+          0 PUSHINT
+        }> PUSHCONT
+        IFELSE
+        <{
+          s0 s2 XCHG
+          8 STU
+          s0 s1 XCHG
+        }> PUSHCONT
+        <{
+          s1 POP
+        }> PUSHCONT
+        IFELSE
+      }> PUSHCONT
+      <{
+        LDREF
+        s0 POP
+        CTOS
+      }> PUSHCONT
+      IFELSE
+    }> PUSHCONT
+    WHILE
+    s0 POP
+    ENDC
+    CTOS
   }>
   ?fun_ref_b2f99ae1a1dd4dfb PROCREF:<{
     s2 PUSH

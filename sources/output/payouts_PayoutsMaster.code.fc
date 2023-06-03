@@ -25,6 +25,23 @@
     return ($self'owner, $self'publicKey, $self'stopped, $self'burn);
 }
 
+slice $global_normalizeKey(slice $src) impure inline_ref {
+    builder $out = begin_cell();
+    slice $slice = __tact_str_to_slice($src);
+    while (( ((slice_bits($slice) > 0)) ? (true) : ((slice_refs($slice) > 0)) )) {
+        throw_unless(46762, ( (((slice_bits($slice) % 8) == 0)) ? ((slice_refs($slice) <= 1)) : (false) ));
+        if ((slice_bits($slice) > 0)) {
+            int $ch = $slice~load_uint(8);
+            if (( (($ch >= 33)) ? (($ch <= 126)) : (false) )) {
+                $out = store_uint($out, $ch, 8);
+            }
+        } else {
+            $slice = begin_parse($slice~load_ref());
+        }
+    }
+    return __tact_slice_to_str($Builder$_fun_asSlice($out));
+}
+
 ((slice, int, int, tuple), int) $PayoutsMaster$_fun_publicKey((slice, int, int, tuple) $self) impure inline_ref {
     var (($self'owner, $self'publicKey, $self'stopped, $self'burn)) = $self;
     return (($self'owner, $self'publicKey, $self'stopped, $self'burn), $self'publicKey);
@@ -69,6 +86,7 @@
 
 ((slice, int, int, tuple), ()) $PayoutsMaster$_internal_any_text((slice, int, int, tuple) $self, slice $withdraw) impure inline {
     var ($self'owner, $self'publicKey, $self'stopped, $self'burn) = $self;
+    $withdraw = $global_normalizeKey($withdraw);
     ($self'owner, $self'publicKey, $self'stopped, $self'burn)~$PayoutsMaster$_fun_requireNotStopped();
     var ($ctx'bounced, $ctx'sender, $ctx'value, $ctx'raw) = __tact_context_get();
     throw_unless(16059, ($ctx'value >= 1000000000));
@@ -207,7 +225,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmWSyiRWxLEK7zFhUiSDU6npWebDJ9pYNqxSJeoA11MvJg";
+    return "ipfs://QmTpdSCxnbEbMJstNpifneBtT89FXHMdoEwBJ2S19qzdPb";
 }
 
 _ lazy_deployment_completed() method_id {

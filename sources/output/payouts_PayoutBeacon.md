@@ -96,6 +96,7 @@ Total Get Methods: 3
 16059: Invalid value
 19204: Insufficient balance on master
 40368: Contract stopped
+46762: Invalid string
 48401: Invalid signature
 53296: Contract not stopped
 57826: Check withdraw min value

@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: PayoutsMaster
-BOC Size: 2539 bytes
+BOC Size: 2623 bytes
 
 # Types
 Total Types: 13
@@ -98,6 +98,7 @@ Total Get Methods: 4
 16059: Invalid value
 19204: Insufficient balance on master
 40368: Contract stopped
+46762: Invalid string
 48401: Invalid signature
 53296: Contract not stopped
 57826: Check withdraw min value

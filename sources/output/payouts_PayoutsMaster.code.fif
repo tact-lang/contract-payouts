@@ -41,6 +41,7 @@ PROGRAM{
   DECLPROC $global_send
   DECLPROC $global_emit
   DECLPROC $Builder$_fun_asSlice
+  DECLPROC $global_normalizeKey
   DECLPROC $Slice$_fun_fromBase64
   DECLPROC $String$_fun_fromBase64
   DECLPROC $PayoutBeacon$_init_child
@@ -534,6 +535,63 @@ PROGRAM{
     ENDC
     CTOS
   }>
+  $global_normalizeKey PROCREF:<{
+    NEWC
+    SWAP
+    WHILE:<{
+      DUP
+      SBITS
+      0 GTINT
+      IF:<{
+        TRUE
+      }>ELSE<{
+        DUP
+        SREFS
+        0 GTINT
+      }>
+    }>DO<{
+      46762 PUSHINT
+      OVER
+      SBITS
+      3 MODPOW2#
+      0 EQINT
+      IF:<{
+        OVER
+        SREFS
+        2 LESSINT
+      }>ELSE<{
+        FALSE
+      }>
+      THROWANYIFNOT
+      DUP
+      SBITS
+      0 GTINT
+      IF:<{
+        8 LDU
+        OVER
+        32 GTINT
+        IF:<{
+          OVER
+          127 LESSINT
+        }>ELSE<{
+          FALSE
+        }>
+        IF:<{
+          s0 s2 XCHG
+          8 STU
+          SWAP
+        }>ELSE<{
+          NIP
+        }>
+      }>ELSE<{
+        LDREF
+        DROP
+        CTOS
+      }>
+    }>
+    DROP
+    $Builder$_fun_asSlice INLINECALLDICT
+  }>
   $Slice$_fun_fromBase64 PROCREF:<{
     DUP
     SBITS
@@ -784,6 +842,7 @@ PROGRAM{
     CONT:<{
       c2 SAVE
       SAMEALTSAVE
+      $global_normalizeKey INLINECALLDICT
       4 -ROLL
       $PayoutsMaster$_fun_requireNotStopped INLINECALLDICT
       __tact_context_get INLINECALLDICT
@@ -1018,7 +1077,7 @@ PROGRAM{
     192989407141549587419771644724066226057 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d575379695257784c454b377a46685569534455366e70576562444a3970594e7178534a656f4131314d764a67} PUSHSLICE
+    x{697066733a2f2f516d5470645343786e6245624d4a73744e7069666e6542745438394658484d646f4577424a32533139717a645062} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH

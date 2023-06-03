@@ -68,7 +68,7 @@ describe("contract-payouts", () => {
                       "from": "@master",
                       "to": "@treasure(non-owner-2)",
                       "type": "internal",
-                      "value": "0.944409",
+                      "value": "0.861542",
                     },
                   },
                 ],
@@ -77,7 +77,7 @@ describe("contract-payouts", () => {
         `);
 
         // Try to withdraw with a ticket for correct user
-        await contract.send(nonOwner, { value: toNano(1) }, ticket);
+        await contract.send(nonOwner, { value: toNano(1) }, "               \n" + ticket + "\t\t\t\n\n");
         await system.run();
         expect((await payeeBeaconContract.getOwner()).toString({ testOnly: true })).toBe(
             nonOwner.address.toString({ testOnly: true })
@@ -99,7 +99,10 @@ describe("contract-payouts", () => {
                     "$type": "received",
                     "message": {
                       "body": {
-                        "text": "ykxDM8uSVnETzVCi8-mWYFMiCPLAKkVUn4qj2Bki4zzxYmawJq8rMPQ7jD6h69tsJlJpWDdFpCACzyBTb3osCVF0h26AAA",
+                        "text": "               
+            ykxDM8uSVnETzVCi8-mWYFMiCPLAKkVUn4qj2Bki4zzxYmawJq8rMPQ7jD6h69tsJlJpWDdFpCACzyBTb3osCVF0h26AAA			
+
+            ",
                         "type": "text",
                       },
                       "bounce": true,
@@ -111,7 +114,7 @@ describe("contract-payouts", () => {
                   },
                   {
                     "$type": "processed",
-                    "gasUsed": 68454n,
+                    "gasUsed": 168249n,
                   },
                   {
                     "$type": "sent",
@@ -127,9 +130,9 @@ describe("contract-payouts", () => {
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQBGgQqZ2IQxleS2rrl4D2rrq2atlM3fcWBBkeqlSdkJ6hOK",
+                        "to": "kQBjSixX6u3OU4qdZI4DifcPcA_BlznSU6PxLO3o7aci5rw-",
                         "type": "internal",
-                        "value": "0.917433",
+                        "value": "0.817638",
                       },
                     ],
                   },
@@ -150,10 +153,10 @@ describe("contract-payouts", () => {
                         },
                       },
                       "bounce": true,
-                      "from": "kQBGgQqZ2IQxleS2rrl4D2rrq2atlM3fcWBBkeqlSdkJ6hOK",
+                      "from": "kQBjSixX6u3OU4qdZI4DifcPcA_BlznSU6PxLO3o7aci5rw-",
                       "to": "@master",
                       "type": "internal",
-                      "value": "0.804598",
+                      "value": "0.704803",
                     },
                   },
                   {
@@ -189,7 +192,7 @@ describe("contract-payouts", () => {
                         "from": "@master",
                         "to": "@treasure(non-owner)",
                         "type": "internal",
-                        "value": "100.786898",
+                        "value": "100.687103",
                       },
                     ],
                   },
@@ -226,7 +229,7 @@ describe("contract-payouts", () => {
                   },
                   {
                     "$type": "processed",
-                    "gasUsed": 68454n,
+                    "gasUsed": 151449n,
                   },
                   {
                     "$type": "sent",
@@ -242,9 +245,9 @@ describe("contract-payouts", () => {
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQBGgQqZ2IQxleS2rrl4D2rrq2atlM3fcWBBkeqlSdkJ6hOK",
+                        "to": "kQBjSixX6u3OU4qdZI4DifcPcA_BlznSU6PxLO3o7aci5rw-",
                         "type": "internal",
-                        "value": "0.917433",
+                        "value": "0.834438",
                       },
                     ],
                   },
@@ -265,10 +268,10 @@ describe("contract-payouts", () => {
                         },
                       },
                       "bounce": false,
-                      "from": "kQBGgQqZ2IQxleS2rrl4D2rrq2atlM3fcWBBkeqlSdkJ6hOK",
+                      "from": "kQBjSixX6u3OU4qdZI4DifcPcA_BlznSU6PxLO3o7aci5rw-",
                       "to": "@master",
                       "type": "internal",
-                      "value": "0.905124993",
+                      "value": "0.822129993",
                     },
                   },
                   {
@@ -287,7 +290,7 @@ describe("contract-payouts", () => {
                         "from": "@master",
                         "to": "@treasure(non-owner)",
                         "type": "internal",
-                        "value": "0.895986993",
+                        "value": "0.812991993",
                       },
                     ],
                   },
@@ -340,7 +343,7 @@ describe("contract-payouts", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.000106734",
+                    "amount": "0.000108486",
                   },
                   {
                     "$type": "received",
@@ -358,7 +361,7 @@ describe("contract-payouts", () => {
                   },
                   {
                     "$type": "processed",
-                    "gasUsed": 69176n,
+                    "gasUsed": 152071n,
                   },
                   {
                     "$type": "sent",
@@ -374,9 +377,9 @@ describe("contract-payouts", () => {
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQD2sW2v8hDs7EULUgBOtjdhtmQ-vR3l_b08xIbIkiOY0aGQ",
+                        "to": "kQArP0qfWz7ok3HNhd8lVvjXFPb5bExMNRW8ZtLyJ3llw8VX",
                         "type": "internal",
-                        "value": "0.916711",
+                        "value": "0.833816",
                       },
                     ],
                   },
@@ -397,10 +400,10 @@ describe("contract-payouts", () => {
                         },
                       },
                       "bounce": true,
-                      "from": "kQD2sW2v8hDs7EULUgBOtjdhtmQ-vR3l_b08xIbIkiOY0aGQ",
+                      "from": "kQArP0qfWz7ok3HNhd8lVvjXFPb5bExMNRW8ZtLyJ3llw8VX",
                       "to": "@master",
                       "type": "internal",
-                      "value": "0.803876",
+                      "value": "0.720981",
                     },
                   },
                   {
@@ -436,7 +439,7 @@ describe("contract-payouts", () => {
                         "from": "@master",
                         "to": "@treasure(non-owner)",
                         "type": "internal",
-                        "value": "100.78591",
+                        "value": "100.703015",
                       },
                     ],
                   },
@@ -456,7 +459,7 @@ describe("contract-payouts", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.001494272",
+                    "amount": "0.001518796",
                   },
                   {
                     "$type": "received",
@@ -474,7 +477,7 @@ describe("contract-payouts", () => {
                   },
                   {
                     "$type": "processed",
-                    "gasUsed": 70722n,
+                    "gasUsed": 153617n,
                   },
                   {
                     "$type": "sent",
@@ -490,9 +493,9 @@ describe("contract-payouts", () => {
                         },
                         "bounce": true,
                         "from": "@master",
-                        "to": "kQB1Rtu-XOFlIqLvvVpopBlM6iQZ3DrdkyZHuY1t29IKNeO9",
+                        "to": "kQDnS0uxniAkkVrSRfIniAoc1HsXdkqX5KFTb5QOveeFSzeF",
                         "type": "internal",
-                        "value": "0.915165",
+                        "value": "0.83227",
                       },
                     ],
                   },
@@ -513,10 +516,10 @@ describe("contract-payouts", () => {
                         },
                       },
                       "bounce": true,
-                      "from": "kQB1Rtu-XOFlIqLvvVpopBlM6iQZ3DrdkyZHuY1t29IKNeO9",
+                      "from": "kQDnS0uxniAkkVrSRfIniAoc1HsXdkqX5KFTb5QOveeFSzeF",
                       "to": "@master",
                       "type": "internal",
-                      "value": "0.80233",
+                      "value": "0.719435",
                     },
                   },
                   {
@@ -552,7 +555,7 @@ describe("contract-payouts", () => {
                         "from": "@master",
                         "to": "@treasure(non-owner-2)",
                         "type": "internal",
-                        "value": "50.784364",
+                        "value": "50.701469",
                       },
                     ],
                   },
@@ -572,7 +575,7 @@ describe("contract-payouts", () => {
                 "events": [
                   {
                     "$type": "storage-charged",
-                    "amount": "0.001067338",
+                    "amount": "0.001084855",
                   },
                   {
                     "$type": "received",
@@ -590,7 +593,7 @@ describe("contract-payouts", () => {
                   },
                   {
                     "$type": "processed",
-                    "gasUsed": 61702n,
+                    "gasUsed": 144597n,
                   },
                   {
                     "$type": "sent",
@@ -604,7 +607,7 @@ describe("contract-payouts", () => {
                         "from": "@master",
                         "to": "@treasure(non-owner-3)",
                         "type": "internal",
-                        "value": "0.937006",
+                        "value": "0.854111",
                       },
                     ],
                   },

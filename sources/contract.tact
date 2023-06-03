@@ -98,6 +98,9 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
 
     receive(withdraw: String) {
 
+        // Normalize
+        withdraw = normalizeKey(withdraw);
+
         // Check that the contract is not stopped
         self.requireNotStopped();
 
@@ -226,4 +229,21 @@ contract PayoutsMaster with Deployable, Ownable, Resumable {
     get fun burn(): BurnParameters? {
         return self.burn;
     } 
+}
+
+fun normalizeKey(src: String): String {
+    let out: Builder = beginCell();
+    let slice: Slice = src.asSlice();
+    while(slice.bits() > 0 || slice.refs() > 0) {
+        require(slice.bits() % 8 == 0 && slice.refs() <= 1, "Invalid string");
+        if (slice.bits() > 0) {
+            let ch: Int = slice.loadUint(8);
+            if (ch >= 33 && ch <= 126) {
+                out = out.storeUint(ch, 8);
+            }
+        } else {
+            slice = slice.loadRef().beginParse();
+        }
+    }
+    return out.asSlice().asString();
 }
